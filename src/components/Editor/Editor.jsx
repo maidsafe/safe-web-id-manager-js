@@ -28,7 +28,7 @@ export default class Editor extends React.Component
     render()
     {
         const { match, webIds } = this.props;
-        console.log( '>>>>>>>>>', this.props );
+
         return (
             <div className="wrapper">
                 <Switch>

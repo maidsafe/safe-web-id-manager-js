@@ -78,7 +78,7 @@ class IdForm extends React.Component
 
         const { id, submit } = this.props;
         return (
-            <Form layout="vertical" onSubmit={ this.handleSubmit } >
+            <Form className='jest-form' layout="vertical" onSubmit={ this.handleSubmit } >
                 <FormItem label="name" >
                     {getFieldDecorator( 'name', {
                         rules : [{ required: true, message: 'Please input a webId name!' }],
