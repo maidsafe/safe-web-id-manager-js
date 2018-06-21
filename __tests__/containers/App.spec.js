@@ -67,6 +67,47 @@ describe( 'App', () =>
     } );
 
 
+    describe( '/', () =>
+    {
+        it( 'should have a List (as it redirects)', () =>
+        {
+            props = { ...props };
+
+            wrapper = mount( <MemoryRouter initialEntries={ ['/'] } >
+                <App { ...props } />
+            </MemoryRouter> );
+            expect( wrapper.find( 'List' ).length ).toBe( 1 );
+        } );
+
+        it( 'should have a no form', () =>
+        {
+            props = { ...props };
+
+            wrapper = mount( <MemoryRouter initialEntries={ ['/'] } >
+                <App { ...props } />
+                             </MemoryRouter> );
+            expect( wrapper.find( 'Editor' ).length ).toBe( 0 );
+            expect( wrapper.find( 'IdForm' ).length ).toBe( 0 );
+        } );
+    } );
+
+
+    describe( '/create', () =>
+    {
+
+        it( 'should have a form', () =>
+        {
+            props = { ...props };
+
+            wrapper = mount( <MemoryRouter initialEntries={ ['/create/new'] } >
+                <App { ...props } />
+            </MemoryRouter> );
+            expect( wrapper.find( 'Editor' ).length ).toBe( 0 );
+            expect( wrapper.find( 'IdForm' ).length ).toBe( 1 );
+        } );
+    } );
+
+
     describe( '/edit/:name', () =>
     {
         it( 'should have not have idForm if no name given', () =>
@@ -75,7 +116,7 @@ describe( 'App', () =>
 
             wrapper = mount( <MemoryRouter initialEntries={ ['/edit'] } >
                 <App { ...props } />
-            </MemoryRouter> );
+                             </MemoryRouter> );
             expect( wrapper.find( 'Editor' ).length ).toBe( 1 );
             expect( wrapper.find( 'IdForm' ).length ).toBe( 0 );
         } );
@@ -86,7 +127,7 @@ describe( 'App', () =>
 
             wrapper = mount( <MemoryRouter initialEntries={ ['/edit/name'] } >
                 <App { ...props } />
-            </MemoryRouter> );
+                             </MemoryRouter> );
             expect( wrapper.find( 'Editor' ).length ).toBe( 1 );
             expect( wrapper.find( 'IdForm' ).length ).toBe( 1 );
         } );
