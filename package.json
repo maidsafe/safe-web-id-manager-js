@@ -1,6 +1,13 @@
 {
   "name": "rdfManager",
   "version": "1.0.0",
+  "identifier": "net.maidsafe.web-id-manager",
+  "vendor": "MaidSafe.net Ltd",
+  "author": {
+    "name": "Maidsafe.net Ltd",
+    "email": "qa@maidsafe.net",
+    "url": "https://github.com/maidsafe"
+  },
   "description": "Manage RDF data on the SAFE Network",
   "main": "src/index.js",
   "license": "MIT",
@@ -8,7 +15,8 @@
     "test": "cross-env NODE_ENV=test jest --notify",
     "start": "NODE_ENV=development parcel public/index.html",
     "lint": "eslint --cache --format=node_modules/eslint-formatter-pretty .",
-    "lint-fix": "yarn run lint -- --fix"
+    "lint-fix": "yarn run lint -- --fix",
+    "prepush" : "yarn test"
   },
   "dependencies": {
     "add": "2.0.6",

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, List } from 'antd';
-import { PATHS } from '../../constants';
+import PATHS from '../../constants/paths';
 
 const IdList = ( props ) => (
     <div>

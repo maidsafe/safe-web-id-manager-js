@@ -7,7 +7,6 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from 'reducers';
 
-
 function configureStore( initialState )
 {
     return createStore(
@@ -25,6 +24,8 @@ describe( 'App', () =>
 
     beforeEach( () =>
     {
+        window.safe = { initialiseApp: jest.fn() }
+
         const store = configureStore( {} );
 
         props = {
@@ -55,15 +56,6 @@ describe( 'App', () =>
             expect( wrapper.find( 'Header' ).length ).toBe( 1 );
         } );
 
-        it( 'should have a Header', () =>
-        {
-            props = { ...props };
-
-            wrapper = mount( <MemoryRouter initialEntries={ ['/'] } >
-                <App { ...props } />
-                             </MemoryRouter> );
-            expect( wrapper.find( 'Header' ).length ).toBe( 1 );
-        } );
     } );
 
 

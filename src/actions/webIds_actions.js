@@ -1,11 +1,11 @@
 import { createActions } from 'redux-actions';
 
 export const TYPES = {
-    SET_CURRENT_SCHEMA : 'SET_CURRENT_SCHEMA'
+    SET_AVAILABLE_WEB_IDS : 'SET_AVAILABLE_WEB_IDS'
 };
 
 export const {
-    setCurrentSchema
+    setAvailableWebIds
     // , removeBookmark
 
-} = createActions( TYPES.SET_CURRENT_SCHEMA );
+} = createActions( TYPES.SET_AVAILABLE_WEB_IDS );

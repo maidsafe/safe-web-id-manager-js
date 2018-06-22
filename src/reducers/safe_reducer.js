@@ -1,21 +1,8 @@
 import { TYPES } from '../actions/webIds_actions';
 
-const initialState = [
-    {
-        name: 'Josh1',
-        avatar : 'base6444',
-        inbox: {},
-        website: 'safe://some.tester',
-        pk : ''
-    },
-    {
-        name: 'Gab',
-        avatar : 'base6444',
-        inbox: {},
-        website: 'safe://lallalaa',
-        pk : ''
-    }
-]
+const initialState = {
+    connected: false
+}
 
 export default ( state = initialState, action ) =>
 {

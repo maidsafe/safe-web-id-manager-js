@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu } from 'antd';
-import { PATHS } from '../../constants';
+import PATHS from '../../constants/paths';
 
 const Header = ( props ) =>
 {
