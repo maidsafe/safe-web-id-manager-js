@@ -1,10 +1,2 @@
-import PATHS from './paths';
-import APP_INFO from './appInfo';
-
-
-const toExport = {
-    PATHS,
-    APP_INFO
-};
-
-export default toExport;
+export { PATHS } from './paths';
+export { APP_INFO } from './appInfo';

@@ -1,6 +1,6 @@
 import pkg from '../../package.json';
 
-const APP_INFO = {
+export const APP_INFO = {
     info : {
         id     : pkg.identifier,
         scope  : null,
@@ -11,7 +11,9 @@ const APP_INFO = {
         own_container : true,
     },
     permissions : {
+        _public      : ['Read', 'Insert', 'Update', 'Delete'],
+        _publicNames : ['Read', 'Insert', 'Update', 'Delete']
     },
 };
 
-export default APP_INFO;
+// export default APP_INFO;

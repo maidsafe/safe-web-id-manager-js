@@ -1,6 +1,7 @@
 {
-  "name": "rdfManager",
+  "name": "webIdManager",
   "version": "1.0.0",
+  "productName": "webIdManager",
   "identifier": "net.maidsafe.web-id-manager",
   "vendor": "MaidSafe.net Ltd",
   "author": {
