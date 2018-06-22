@@ -1,5 +1,5 @@
 import { createActions } from 'redux-actions';
-import {APP_INFO} from '../constants';
+import { APP_INFO } from '../constants';
 
 export const TYPES = {
     SAFE_AUTHORISE : 'SAFE_AUTHORISE'
@@ -14,32 +14,25 @@ export const {
     [TYPES.SAFE_AUTHORISE] : async () =>
     {
         // console.log(window.name)
-        if( window.name ) return; // jest short circuit
+        if ( window.name ) return; // jest short circuit
 
         if ( !safe )
         {
             throw new Error( 'SAFE APIs are missing' );
         }
 
-        console.log( 'appinfo', APP_INFO )
-        try {
-
+        try
+        {
             const app = await safe.initialiseApp( APP_INFO.info );
-
-            console.log( 'app itself', app )
             const authUri = await app.auth.genAuthUri( APP_INFO.permissions, APP_INFO.opts );
+            const response = await safe.authorise( authUri );
+            const connectedApp = await app.auth.loginFromUri( response );
 
-            console.log('uathiijdiui', authUri)
-
-            let response = await safe.authorise( authUri );
-            console.log('authorised the app', response, app);
-
-            let connectedApp = await app.auth.loginFromUri( response );
-
-            return { idApp : connectedApp };
-
-        } catch (e) {
-            console.log('eeeeee', e)
+            return { idApp: connectedApp };
+        }
+        catch ( e )
+        {
+            console.log( 'Error in auth attempt', e );
         }
 
 
