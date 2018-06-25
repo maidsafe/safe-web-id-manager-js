@@ -1,28 +1,46 @@
 import { TYPES } from '../actions/webIds_actions';
+import { message } from 'antd';
 
-const initialState = [
+export const initialState = [
     {
-        name: 'Josh1',
-        avatar : 'base6444',
-        inbox: {},
-        website: 'safe://some.tester',
-        pk : ''
+        name    : 'Josh1',
+        avatar  : 'base6444',
+        inbox   : {},
+        website : 'safe://some.tester',
+        pk      : ''
     },
     {
-        name: 'Gab',
-        avatar : 'base6444',
-        inbox: {},
-        website: 'safe://lallalaa',
-        pk : ''
+        name    : 'Gab',
+        avatar  : 'base6444',
+        inbox   : {},
+        website : 'safe://lallalaa',
+        pk      : ''
     }
-]
+];
 
 export default ( state = initialState, action ) =>
 {
     const { payload } = action;
 
+    message.success(action.type)
+
     switch ( action.type )
     {
+        case TYPES.ADD_WEB_ID:
+        {
+            return [...state, payload];
+        }
+        case TYPES.UPDATE_WEB_ID:
+        {
+            const oldIdIndex = state.findIndex( webId => webId.id === payload.id );
+            const oldId = state[oldIdIndex];
+            const updatedId = { ...oldId, ...payload };
+
+            const newState = [ ...state ];
+
+            newState[oldIdIndex] = updatedId;
+            return newState;
+        }
         case TYPES.SET_AVAILABLE_WEB_IDS: {
             return payload;
         }

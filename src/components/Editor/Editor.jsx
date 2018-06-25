@@ -17,7 +17,8 @@ export default class Editor extends React.Component
     static propTypes =
     {
         webIds : PropTypes.arrayOf( PropTypes.object ),
-        match  : PropTypes.shape( { url: PropTypes.string } ).isRequired
+        match  : PropTypes.shape( { url: PropTypes.string } ).isRequired,
+        updateWebId : PropTypes.func.isRequired
     }
 
     static defaultProps =
@@ -27,7 +28,7 @@ export default class Editor extends React.Component
 
     render()
     {
-        const { match, webIds } = this.props;
+        const { match, webIds, updateWebId } = this.props;
 
         return (
             <div className="wrapper">
@@ -37,6 +38,7 @@ export default class Editor extends React.Component
                         render={ ( props ) =>
                             ( <IdForm
                                 { ...props }
+                                submit={ updateWebId }
                                 id={ webIds.find( id => id.name === props.match.params.name ) }
                             /> )
                         }

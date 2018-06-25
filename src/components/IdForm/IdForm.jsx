@@ -47,7 +47,7 @@ class IdForm extends React.Component
             avatar  : PropTypes.string,
             pk      : PropTypes.string
         } ),
-        submit : PropTypes.func
+        submit : PropTypes.func.isRequired
     }
     static defaultProps = {
         id : {
@@ -55,18 +55,22 @@ class IdForm extends React.Component
             website : '',
             avatar  : '',
             pk      : ''
-        },
-        submit : ( values ) => console.log( 'Submisssion', values )
+        }
     }
 
     handleSubmit = ( e ) =>
     {
         e.preventDefault();
+
+        const { match, submit } = this.props;
+
         this.props.form.validateFields( ( err, values ) =>
         {
             if ( !err )
             {
                 console.log( 'Received values of form: ', values );
+
+                submit( values );
             }
         } );
     }
@@ -76,7 +80,7 @@ class IdForm extends React.Component
     {
         const { getFieldDecorator } = this.props.form;
 
-        const { id, submit } = this.props;
+        const { id } = this.props;
         return (
             <Form className='jest-form' layout="vertical" onSubmit={ this.handleSubmit } >
                 <FormItem label="name" >

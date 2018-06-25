@@ -12,6 +12,7 @@ export default ( state = initialState, action ) =>
         case TYPES.SAFE_AUTHORISE: {
             return { ...state, ...payload };
         }
+
         // from browser not needed
         // case TYPES.SET_SELECTED_WEB_ID: {
         //     const selectedId = payload;

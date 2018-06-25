@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { withRouter, Route, Switch } from 'react-router-dom';
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as webIdsActions from '../actions/webIds_actions';
@@ -25,17 +25,16 @@ class App extends React.Component
 
     render = () =>
     {
-        const { webIds, match } = this.props;
+        const { webIds, match, updateWebId } = this.props;
 
         return (
-
             <div className={ styles.appContainer }>
                 <Route path="/" component={ Header } />
                 <Switch>
                     <Route path="/list" render={ () => <List webIds={ webIds } /> } />
-                    <Route path="/edit" render={ ( props ) => <Editor webIds={ webIds } { ...props } /> } />
-                    <Route path="/create/new" component={ IdForm } />
-                    <Route path="/" render={ () => <List webIds={ webIds } /> } />
+                    <Route path="/edit" render={ ( props ) => <Editor webIds={ webIds } { ...props } updateWebId={ updateWebId } /> } />
+                    <Route path="/create/new" render={ props => <IdForm submit={ this.props.addWebId}/> } />
+                    <Route path="/" render={ () => <Redirect to='/list' /> } />
                 </Switch>
             </div>
         );
