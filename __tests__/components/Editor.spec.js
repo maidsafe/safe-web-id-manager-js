@@ -12,7 +12,8 @@ describe( 'Editor', () =>
     beforeEach( () =>
     {
         props = {
-            match : { url: '/editor' }
+            match : { url: '/editor' },
+            updateWebId : jest.fn()
         };
 
         wrapper = shallow( <Editor { ...props } /> );

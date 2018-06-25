@@ -1,5 +1,4 @@
 import { TYPES } from '../actions/webIds_actions';
-import { message } from 'antd';
 
 export const initialState = [
     {
@@ -21,9 +20,6 @@ export const initialState = [
 export default ( state = initialState, action ) =>
 {
     const { payload } = action;
-
-    message.success(action.type)
-
     switch ( action.type )
     {
         case TYPES.ADD_WEB_ID:

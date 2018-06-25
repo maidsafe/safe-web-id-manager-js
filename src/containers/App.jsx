@@ -25,7 +25,13 @@ class App extends React.Component
 
     render = () =>
     {
-        const { webIds, match, updateWebId } = this.props;
+        const {
+            webIds
+            // , match
+            , addWebId
+            , updateWebId
+            , safe
+        } = this.props;
 
         return (
             <div className={ styles.appContainer }>
@@ -33,8 +39,8 @@ class App extends React.Component
                 <Switch>
                     <Route path="/list" render={ () => <List webIds={ webIds } /> } />
                     <Route path="/edit" render={ ( props ) => <Editor webIds={ webIds } { ...props } updateWebId={ updateWebId } /> } />
-                    <Route path="/create/new" render={ props => <IdForm submit={ this.props.addWebId}/> } />
-                    <Route path="/" render={ () => <Redirect to='/list' /> } />
+                    <Route path="/create/new" render={ props => <IdForm submit={ addWebId } idApp={ safe.idApp } /> } />
+                    <Route path="/" render={ () => <Redirect to="/list" /> } />
                 </Switch>
             </div>
         );

@@ -10,17 +10,26 @@ describe( 'webIds actions', () =>
         expect( webIdsActions.TYPES ).toBeDefined();
     } );
 
-    it( 'should add ADD_WEB_ID', () =>
+    it( 'should add ADD_WEB_ID', async () =>
     {
+        expect.assertions(3);
+
         const payload = {
-            name : 'testerton'
+            webId: {
+                name : 'testerton'
+            }
         };
+
         const expectedAction = {
-            type : webIdsActions.TYPES.ADD_WEB_ID,
-            payload
+            type : webIdsActions.TYPES.ADD_WEB_ID
         };
-        expect( webIdsActions.addWebId( payload ) ).toMatchObject( expectedAction );
-        expect( webIdsActions.addWebId( payload ).payload ).toHaveProperty( 'id' );
+
+        const res = webIdsActions.addWebId( payload )
+        const resultPayload = await res.payload;
+
+        expect( res ).toMatchObject( expectedAction );
+        expect( resultPayload ).not.toHaveProperty( 'idApp' );
+        expect( resultPayload ).toEqual( payload.webId );
     } );
 
     it( 'should update UDPATE_WEB_ID', () =>

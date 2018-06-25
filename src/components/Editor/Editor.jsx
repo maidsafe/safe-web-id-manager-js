@@ -3,13 +3,6 @@ import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
 import IdForm from '../IdForm/IdForm';
-// {
-//     name: 'Josh1',
-//     img : 'base6444',
-//     inbox: {},
-//     website: 'safe://some.tester',
-//     pk : {}
-// }
 
 
 export default class Editor extends React.Component
