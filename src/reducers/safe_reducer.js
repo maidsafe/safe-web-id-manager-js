@@ -1,7 +1,6 @@
-import { TYPES } from '../actions/webIds_actions';
+import { TYPES } from '../actions/safe_actions';
 
-const initialState = {
-    connected: false
+export const initialState = {
 }
 
 export default ( state = initialState, action ) =>
@@ -10,15 +9,16 @@ export default ( state = initialState, action ) =>
 
     switch ( action.type )
     {
-        case TYPES.SET_AVAILABLE_WEB_IDS: {
-            return payload;
+        case TYPES.SAFE_AUTHORISE: {
+            return { ...state, ...payload };
         }
         // from browser not needed
         // case TYPES.SET_SELECTED_WEB_ID: {
         //     const selectedId = payload;
         // }
 
-        default:
+        default: {
             return state;
+        }
     }
 };
