@@ -32,26 +32,45 @@ describe( 'webIds actions', () =>
         expect( resultPayload ).toEqual( payload.webId );
     } );
 
-    it( 'should update UDPATE_WEB_ID', () =>
+    it( 'should update UDPATE_WEB_ID', async () =>
     {
         const payload = {
-            name : 'testerton',
-            id   : 6
+            webId: {
+                name : 'testerton',
+                id   : 6
+            }
         };
+
         const expectedAction = {
-            type : webIdsActions.TYPES.UPDATE_WEB_ID,
-            payload
+            type : webIdsActions.TYPES.UPDATE_WEB_ID
         };
-        expect( webIdsActions.updateWebId( payload ) ).toMatchObject( expectedAction );
+
+        const res = webIdsActions.updateWebId( payload )
+        const resultPayload = await res.payload;
+
+        expect( res ).toMatchObject( expectedAction );
+        expect( resultPayload ).not.toHaveProperty( 'idApp' );
+        expect( resultPayload ).toEqual( payload.webId );
     } );
 
-    it( 'should add SET_AVAILABLE_WEB_IDS', () =>
+    it( 'should add GET_AVAILABLE_WEB_IDS', async () =>
     {
-        const payload = [{ name: 'woo' }];
-        const expectedAction = {
-            type : webIdsActions.TYPES.SET_AVAILABLE_WEB_IDS,
-            payload
+        const payload = {
+            webId: {
+                name : 'testerton',
+                id   : 6
+            }
         };
-        expect( webIdsActions.setAvailableWebIds( payload ) ).toMatchObject( expectedAction );
+
+        const expectedAction = {
+            type : webIdsActions.TYPES.GET_AVAILABLE_WEB_IDS
+        };
+
+        const res = webIdsActions.getAvailableWebIds( payload )
+        const resultPayload = await res.payload;
+
+        expect( res ).toMatchObject( expectedAction );
+        expect( resultPayload ).toBeType( 'array' );
+        // expect( resultPayload ).toEqual( payload.webId );
     } );
 } );

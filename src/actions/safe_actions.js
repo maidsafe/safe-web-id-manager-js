@@ -13,7 +13,6 @@ export const {
 } = createActions( {
     [TYPES.SAFE_AUTHORISE] : async () =>
     {
-        // console.log(window.name)
         if ( window.name ) return; // jest short circuit
 
         if ( !safe )

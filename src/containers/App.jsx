@@ -29,6 +29,7 @@ class App extends React.Component
             webIds
             // , match
             , addWebId
+            , getAvailableWebIds
             , updateWebId
             , safe
         } = this.props;
@@ -37,7 +38,9 @@ class App extends React.Component
             <div className={ styles.appContainer }>
                 <Route path="/" component={ Header } />
                 <Switch>
-                    <Route path="/list" render={ () => <List webIds={ webIds } /> } />
+                    <Route path="/list" render={ () =>
+                        <List webIds={ webIds } getAvailableWebIds={ getAvailableWebIds } idApp={ safe.idApp } /> }
+                    />
                     <Route path="/edit" render={ ( props ) => <Editor webIds={ webIds } { ...props } updateWebId={ updateWebId } /> } />
                     <Route path="/create/new" render={ props => <IdForm submit={ addWebId } idApp={ safe.idApp } /> } />
                     <Route path="/" render={ () => <Redirect to="/list" /> } />

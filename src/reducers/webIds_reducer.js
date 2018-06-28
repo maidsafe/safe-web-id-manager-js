@@ -37,8 +37,8 @@ export default ( state = initialState, action ) =>
             newState[oldIdIndex] = updatedId;
             return newState;
         }
-        case TYPES.SET_AVAILABLE_WEB_IDS: {
-            return payload;
+        case TYPES.GET_AVAILABLE_WEB_IDS: {
+            return initialState;
         }
         // from browser not needed
         // case TYPES.SET_SELECTED_WEB_ID: {
