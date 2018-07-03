@@ -76,6 +76,7 @@ class Avatar extends React.Component
               listType="picture-card"
               className="avatar-uploader"
               showUploadList={ false }
+              ref={(c)=> {this.uploader = c}}
               // action="http://localhost:3984/dummy/upload"
               beforeUpload={ beforeUpload }
               onChange={ this.handleChange }

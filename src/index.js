@@ -18,6 +18,9 @@ if ( window.webIdEventEmitter )
     } );
 }
 
+// const composeEnhancers = compose;
+
+// console.log('__REDUX_DEVTOOLS_EXTENSION_COMPOSE__',__REDUX_DEVTOOLS_EXTENSION_COMPOSE__);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middleware = [thunk, promiseMiddleware];
 const enhancer = composeEnhancers( applyMiddleware( ...middleware ) );

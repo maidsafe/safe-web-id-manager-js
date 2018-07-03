@@ -6,11 +6,11 @@ import Avatar from '../Avatar/Avatar';
 const FormItem = Form.Item;
 
 const defaultId = {
-    name     : 'aa',
-    nickname : `bb`,
-    uri      : 'safe://lalala.bla',
-    website  : 'safe://another.bla',
-    avatar   : 'pic',
+    name     : '',
+    nickname : '',
+    uri      : 'safe://',
+    website  : 'safe://',
+    avatar   : '',
     pk       : ''
 };
 
@@ -79,13 +79,15 @@ class IdForm extends React.Component
 
         const { match, submit, idApp } = this.props;
 
+        const imgBase64 = this.theAvatar.state.imageUrl ;
+
         this.props.form.validateFields( ( err, values ) =>
         {
             if ( !err )
             {
-                console.log( 'Received values of form: ', idApp, values );
-
-                submit( { idApp, webId: values } );
+                console.log( 'Received values of form: ', values, imgBase64 );
+                const webIdWithImage = { ...values, avatar: imgBase64 };
+                submit( { idApp, webId: webIdWithImage } );
             }
         } );
     }
@@ -109,7 +111,7 @@ class IdForm extends React.Component
                 </FormItem>
                 <FormItem label="name" >
                     {getFieldDecorator( 'name', {
-                        rules : [{ required: true, message: 'Please input a webId name!' }],
+                        rules : [{ required: true, message: 'Please input a webId name.' }],
                     } )( <Input
                         // and icons removed as attempts to access a font online
                         // prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
@@ -118,7 +120,7 @@ class IdForm extends React.Component
                 </FormItem>
                 <FormItem label="uri" >
                     {getFieldDecorator( 'uri', {
-                        rules : [],
+                        rules : [{ required: true, message: 'publicId location for this webId.'}],
                     } )( <Input
                         // prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
                         placeholder="public name (safe://something)"
@@ -135,7 +137,7 @@ class IdForm extends React.Component
                 <FormItem type="input" label="avatar">
                     {getFieldDecorator( 'avatar', {
                         rules : [],
-                    } )( <Avatar /> )}
+                    } )( <Avatar ref={(c)=>{this.theAvatar = c }}/> )}
                 </FormItem>
                 {/* <FormItem label="publickey" >
                     {getFieldDecorator( 'publickey', {

@@ -17,11 +17,14 @@ const sanitizePayload = ( payload ) =>
     // sanitize for webid rdf for now.
     Object.keys( payload.webId ).forEach( key =>
     {
-        if ( payload.webId[key] )
+        console.log(key, ':', payload.webId[key] )
+        if ( payload.webId[key] && payload.webId[key].length > 0 )
         {
             newWebId[key] = payload.webId[key];
         }
     } );
+
+    console.log('newWeirdiddd' ,newWebId)
 
     return newWebId;
 };
