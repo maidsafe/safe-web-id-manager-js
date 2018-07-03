@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import Avatar from '../Avatar/Avatar';
 
@@ -77,7 +78,7 @@ class IdForm extends React.Component
     {
         e.preventDefault();
 
-        const { match, submit, idApp } = this.props;
+        const { match, submit, idApp, history } = this.props;
 
         const imgBase64 = this.theAvatar.state.imageUrl ;
 
@@ -85,9 +86,13 @@ class IdForm extends React.Component
         {
             if ( !err )
             {
-                console.log( 'Received values of form: ', values, imgBase64 );
+                console.log( 'Received values of form: ', history, values, imgBase64 );
                 const webIdWithImage = { ...values, avatar: imgBase64 };
-                submit( { idApp, webId: webIdWithImage } );
+
+                //history to move us on a page when successful
+                submit( { idApp, webId: webIdWithImage, history } );
+
+                // this.setState({created: true })
             }
         } );
     }

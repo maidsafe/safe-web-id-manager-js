@@ -9,15 +9,28 @@ class IdList extends React.Component
         webIds : []
     }
 
-    handleGetIds = ( newProps ) =>
+    componentDidMount = () =>
     {
-        console.log('update Ids was clicked.')
+        this.getIds();
+    }
+
+
+    getIds = ( ) =>
+    {
         const { getAvailableWebIds, idApp } = this.props;
 
         if( idApp )
         {
             getAvailableWebIds( { idApp } );
         }
+    }
+
+
+    handleGetIds = ( newProps ) =>
+    {
+        console.log('update Ids was clicked.')
+        this.getIds();
+
     }
 
     render = () =>
@@ -36,7 +49,7 @@ class IdList extends React.Component
                 <List>
                     { webIds.map( ( webId, i ) => (
                         <List.Item key={ i }>
-                            <Link to={ `${PATHS.EDIT}/${webId.name}` }>{webId.title}</Link>
+                            <Link to={ `${PATHS.EDIT}/${webId.title}` }>{webId.title}</Link>
                         </List.Item>
                     ) )}
                 </List>

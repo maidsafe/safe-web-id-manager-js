@@ -5,7 +5,8 @@ import { SAFE_CONSTANTS } from '../constants';
 export const TYPES = {
     ADD_WEB_ID            : 'ADD_WEB_ID',
     UPDATE_WEB_ID         : 'UPDATE_WEB_ID',
-    GET_AVAILABLE_WEB_IDS : 'GET_AVAILABLE_WEB_IDS'
+    GET_AVAILABLE_WEB_IDS : 'GET_AVAILABLE_WEB_IDS',
+    GET_WEB_ID            : 'GET_WEB_ID'
 };
 
 const TYPE_TAG = 16048;
@@ -17,14 +18,11 @@ const sanitizePayload = ( payload ) =>
     // sanitize for webid rdf for now.
     Object.keys( payload.webId ).forEach( key =>
     {
-        console.log(key, ':', payload.webId[key] )
         if ( payload.webId[key] && payload.webId[key].length > 0 )
         {
             newWebId[key] = payload.webId[key];
         }
     } );
-
-    console.log('newWeirdiddd' ,newWebId)
 
     return newWebId;
 };
@@ -34,6 +32,7 @@ const sanitizePayload = ( payload ) =>
 export const {
     addWebId,
     updateWebId,
+    getWebId,
     getAvailableWebIds
 } = createActions( {
 
@@ -43,7 +42,7 @@ export const {
 
         if ( window.name ) return newWebId; // jest short circuit
 
-        const { idApp } = payload;
+        const { idApp, history } = payload;
 
         try
         {
@@ -54,6 +53,7 @@ export const {
             await webId.create( newWebId, newWebId.nickname );
 
             console.log( 'WebId created on the network.' );
+            history.push('/'); // back to main page
 
             return newWebId;
 
@@ -68,9 +68,10 @@ export const {
     {
         const updatedWebId = sanitizePayload( payload );
 
-        if ( window.name ) return updatedWebId; // jest short circuit
 
-        const { idApp } = payload;
+        const { idApp, webId } = payload;
+
+        if ( window.name ) return webId; // jest short circuit
 
         try
         {
@@ -99,22 +100,31 @@ export const {
 
         return updatedWebId;
     },
+    [TYPES.GET_WEB_ID] : async ( payload ) => {
+        const { idApp, webId } = payload;
+
+        if ( window.name ) return { ...webId }; // jest short circuit
+
+        const targetXorName = webId.xorName;
+        const targetTypeTag = webId.typeTag;
+        // TODO: Helper this function upppp
+        const newMd = await idApp.mutableData.newPublic(targetXorName, targetTypeTag);
+        const fetchedWebId = await newMd.emulateAs('WebID');
+        await fetchedWebId.fetchContent();
+        const serialised = await fetchedWebId.serialise('application/ld+json');
+
+        console.log("GOT WEBIDDDD", serialised);
+
+        return serialised;
+    },
     [TYPES.GET_AVAILABLE_WEB_IDS] : async ( payload ) =>
     {
         const { idApp } = payload;
-        let webIds;
-        try{
 
-            webIds = await idApp.web.getWebIds( );
+        if ( window.name ) return []; // jest short circuit
 
-            return webIds;
-        }
-        catch(e)
-        {
-            console.log('Error in getAvailableWebIds', e)
-        }
+        let webIds = await idApp.web.getWebIds( );
 
-
-        return []
+        return webIds;
     }
 } );

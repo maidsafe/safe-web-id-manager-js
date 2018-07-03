@@ -37,6 +37,21 @@ export default ( state = initialState, action ) =>
             newState[oldIdIndex] = updatedId;
             return newState;
         }
+        case TYPES.GET_WEB_ID: {
+
+            const oldIdIndex = state.findIndex( webId => webId.id === payload.id );
+            const oldId = state[oldIdIndex] || {};
+
+            const updatedId = { ...oldId, ...payload };
+            const newState = [ ...state ];
+            if( oldIdIndex )
+            {
+                newState[oldIdIndex] = updatedId;
+                return newState;
+            }
+
+            return [...newState, payload ];
+        }
         case TYPES.GET_AVAILABLE_WEB_IDS: {
             return [ ...payload ];
         }

@@ -32,7 +32,7 @@ describe( 'webIds actions', () =>
         expect( resultPayload ).toEqual( payload.webId );
     } );
 
-    it( 'should update UDPATE_WEB_ID', async () =>
+    it( 'should UDPATE_WEB_ID', async () =>
     {
         const payload = {
             webId: {
@@ -53,7 +53,29 @@ describe( 'webIds actions', () =>
         expect( resultPayload ).toEqual( payload.webId );
     } );
 
-    it( 'should add GET_AVAILABLE_WEB_IDS', async () =>
+
+    it( 'should GET_WEB_ID', async () =>
+    {
+        const payload = {
+            webId: {
+                xorName : 'testerton',
+                typeTag   : 'asdasdad'
+            }
+        };
+
+        const expectedAction = {
+            type : webIdsActions.TYPES.GET_WEB_ID
+        };
+
+        const res = webIdsActions.getWebId( payload )
+        const resultPayload = await res.payload;
+
+        expect( res ).toMatchObject( expectedAction );
+        expect( resultPayload ).toBeType( 'object' );
+        // expect( resultPayload ).toEqual( payload.webId );
+    } );
+
+    it( 'should GET_AVAILABLE_WEB_IDS', async () =>
     {
         const payload = {
             webId: {
