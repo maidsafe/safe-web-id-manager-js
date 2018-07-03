@@ -13,6 +13,9 @@ import List from '../components/List/List';
 
 import IdForm from '../components/IdForm/IdForm';
 
+import { Layout, Row, Col } from 'antd';
+
+const { Content } = Layout;
 
 class App extends React.Component
 {
@@ -35,16 +38,40 @@ class App extends React.Component
         } = this.props;
 
         return (
-            <div className={ styles.appContainer }>
-                <Route path="/" component={ Header } />
-                <Switch>
-                    <Route path="/list" render={ () =>
-                        <List webIds={ webIds } getAvailableWebIds={ getAvailableWebIds } idApp={ safe.idApp } /> }
-                    />
-                    <Route path="/edit" render={ ( props ) => <Editor webIds={ webIds } { ...props } updateWebId={ updateWebId } /> } />
-                    <Route path="/create/new" render={ props => <IdForm submit={ addWebId } idApp={ safe.idApp } /> } />
-                    <Route path="/" render={ () => <Redirect to="/list" /> } />
-                </Switch>
+            <div style={ {
+                maxWidth : '800px',
+                display  : 'block',
+                margin   : '0 auto'
+            } }
+            >
+                <Row
+                    gutter={ {
+                        xs : 8, sm : 16, md : 24, lg : 32
+                    } }
+                    type="flex"
+                    justify="center"
+                >
+                    <Col span={ 24 }>
+                        <Layout className={ styles.appContainer }>
+                            <Route path="/" component={ Header } />
+                            <Content>
+
+                                <Switch>
+                                    <Route
+                                        path="/list"
+                                        render={ () =>
+                                            <List webIds={ webIds } getAvailableWebIds={ getAvailableWebIds } idApp={ safe.idApp } /> }
+                                    />
+                                    <Route path="/edit" render={ ( props ) => <Editor webIds={ webIds } { ...props } updateWebId={ updateWebId } /> } />
+                                    <Route path="/create/new" render={ props => <IdForm submit={ addWebId } idApp={ safe.idApp } /> } />
+                                    <Route path="/" render={ () => <Redirect to="/list" /> } />
+                                </Switch>
+                            </Content>
+                        </Layout>
+
+                    </Col>
+                </Row>
+
             </div>
         );
     }

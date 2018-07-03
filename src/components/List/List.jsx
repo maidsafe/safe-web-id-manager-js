@@ -11,11 +11,12 @@ class IdList extends React.Component
 
     handleGetIds = ( newProps ) =>
     {
+        console.log('update Ids was clicked.')
         const { getAvailableWebIds, idApp } = this.props;
 
         if( idApp )
         {
-            getAvailableWebIds( idApp );
+            getAvailableWebIds( { idApp } );
         }
     }
 
@@ -35,7 +36,7 @@ class IdList extends React.Component
                 <List>
                     { webIds.map( ( webId, i ) => (
                         <List.Item key={ i }>
-                            <Link to={ `${PATHS.EDIT}/${webId.name}` }>{webId.name}</Link>
+                            <Link to={ `${PATHS.EDIT}/${webId.name}` }>{webId.title}</Link>
                         </List.Item>
                     ) )}
                 </List>

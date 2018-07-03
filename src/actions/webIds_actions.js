@@ -48,7 +48,7 @@ export const {
             await md.quickSetup( {} );
 
             const webId = await md.emulateAs( 'WebID' );
-            await webId.create( newWebId );
+            await webId.create( newWebId, newWebId.nickname );
 
             console.log( 'WebId created on the network.' );
 
@@ -98,17 +98,17 @@ export const {
     },
     [TYPES.GET_AVAILABLE_WEB_IDS] : async ( payload ) =>
     {
-        console.log('PAUYLLSOADKAODSOAKDOKDOK in action', payload)
         const { idApp } = payload;
-        let names;
+        let webIds;
         try{
 
-            // names = await getPublicNamesContainer( idApp );
-            // console.log('naaaaaaaaaaaaaaaaaames', names)
+            webIds = await idApp.web.getWebIds( );
+
+            return webIds;
         }
         catch(e)
         {
-            console.log('Error in set available weIds', e)
+            console.log('Error in getAvailableWebIds', e)
         }
 
 

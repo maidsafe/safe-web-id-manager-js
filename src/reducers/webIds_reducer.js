@@ -38,7 +38,7 @@ export default ( state = initialState, action ) =>
             return newState;
         }
         case TYPES.GET_AVAILABLE_WEB_IDS: {
-            return initialState;
+            return [ ...payload ];
         }
         // from browser not needed
         // case TYPES.SET_SELECTED_WEB_ID: {

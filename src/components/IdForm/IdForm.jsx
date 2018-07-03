@@ -7,7 +7,7 @@ const FormItem = Form.Item;
 
 const defaultId = {
     name     : 'aa',
-    nickname : 'bb',
+    nickname : `bb`,
     uri      : 'safe://lalala.bla',
     website  : 'safe://another.bla',
     avatar   : 'pic',
@@ -24,13 +24,13 @@ const mapPropsToFields = ( { id } ) =>
     // if( !id ) return;
     const idToUse = id || defaultId;
     return {
-        name : Form.createFormField( {
-            ...idToUse,
-            value : idToUse.name || '',
-        } ),
         nickname : Form.createFormField( {
             ...idToUse,
             value : idToUse.nickname || '',
+        } ),
+        name : Form.createFormField( {
+            ...idToUse,
+            value : idToUse.name || '',
         } ),
         uri : Form.createFormField( {
             ...idToUse,
@@ -60,8 +60,8 @@ class IdForm extends React.Component
 {
     static propTypes = {
         id : PropTypes.shape( {
-            name     : PropTypes.string,
             nickname : PropTypes.string,
+            name     : PropTypes.string,
             website  : PropTypes.string,
             uri      : PropTypes.string,
             avatar   : PropTypes.string,
@@ -98,6 +98,15 @@ class IdForm extends React.Component
         const { id } = this.props;
         return (
             <Form className="jest-form" layout="vertical" onSubmit={ this.handleSubmit } >
+                <FormItem label="nickname" >
+                    {getFieldDecorator( 'nickname', {
+                        rules : [{ required: true, message: 'Please input a nickname, this will be used to identify this WebId!' }],
+                    } )( <Input
+                        // and icons removed as attempts to access a font online
+                        // prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
+                        placeholder="nickname"
+                    /> )}
+                </FormItem>
                 <FormItem label="name" >
                     {getFieldDecorator( 'name', {
                         rules : [{ required: true, message: 'Please input a webId name!' }],
@@ -105,15 +114,6 @@ class IdForm extends React.Component
                         // and icons removed as attempts to access a font online
                         // prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
                         placeholder="Username"
-                    /> )}
-                </FormItem>
-                <FormItem label="nickname" >
-                    {getFieldDecorator( 'nickname', {
-                        rules : [{ required: true, message: 'Please input a webId name!' }],
-                    } )( <Input
-                        // and icons removed as attempts to access a font online
-                        // prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
-                        placeholder="nickname"
                     /> )}
                 </FormItem>
                 <FormItem label="uri" >
