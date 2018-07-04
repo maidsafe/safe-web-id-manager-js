@@ -14,23 +14,34 @@ class IdList extends React.Component
         this.getIds();
     }
 
+    componentWillReceiveProps = ( newProps ) =>
+    {
+        const { idApp } = this.props;
 
-    getIds = ( ) =>
+        // didnt have app, but now we doooo....
+        if( !idApp && newProps.idApp )
+        {
+            this.getIds( newProps.idApp );
+        }
+    }
+
+
+    getIds = ( passedIdApp ) =>
     {
         const { getAvailableWebIds, idApp } = this.props;
 
-        if( idApp )
+        const appToUse = passedIdApp || idApp;
+
+        if( appToUse )
         {
-            getAvailableWebIds( { idApp } );
+            getAvailableWebIds( { idApp: appToUse } );
         }
     }
 
 
     handleGetIds = ( newProps ) =>
     {
-        console.log('update Ids was clicked.')
         this.getIds();
-
     }
 
     render = () =>

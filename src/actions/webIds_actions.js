@@ -119,6 +119,7 @@ export const {
     },
     [TYPES.GET_AVAILABLE_WEB_IDS] : async ( payload ) =>
     {
+        console.log('Getting available ids')
         const { idApp } = payload;
 
         if ( window.name ) return []; // jest short circuit
