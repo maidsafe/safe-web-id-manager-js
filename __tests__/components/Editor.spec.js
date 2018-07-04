@@ -12,7 +12,7 @@ describe( 'Editor', () =>
     beforeEach( () =>
     {
         props = {
-            match : { url: '/editor' },
+            match : { url: '/editor/josh' },
             updateWebId : jest.fn()
         };
 
@@ -34,17 +34,12 @@ describe( 'Editor', () =>
         {
             props = { ...props };
 
-            wrapper = shallow( <Editor { ...props } /> );
+            wrapper = mount( <Editor { ...props } /> );
         } );
 
-        it( 'should contain two Route components', () =>
+        it( 'should have idForm ', () =>
         {
-            expect( wrapper.find( 'Route' ).length ).toBe( 2 );
-        } );
-
-        it( 'should not have idForm if no name given', () =>
-        {
-            expect( wrapper.find( 'IdForm' ).length ).toBe( 0 );
+            expect( wrapper.find( 'IdForm' ).length ).toBe( 1 );
         } );
 
         // it.only( 'should have idForm if name given', () =>

@@ -1,20 +1,6 @@
 import { TYPES } from '../actions/webIds_actions';
 
 export const initialState = [
-    {
-        name    : 'Josh1',
-        avatar  : 'base6444',
-        inbox   : {},
-        website : 'safe://some.tester',
-        pk      : ''
-    },
-    {
-        name    : 'Gab',
-        avatar  : 'base6444',
-        inbox   : {},
-        website : 'safe://lallalaa',
-        pk      : ''
-    }
 ];
 
 export default ( state = initialState, action ) =>

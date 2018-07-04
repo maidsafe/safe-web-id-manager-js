@@ -24,9 +24,6 @@ const Header = ( props ) =>
                 <Menu.Item key={ PATHS.CREATE }>
                     <NavLink to={ PATHS.CREATE } >Create</NavLink>
                 </Menu.Item>
-                <Menu.Item key={ PATHS.EDIT }>
-                    <NavLink to={ PATHS.EDIT } >Edit</NavLink>
-                </Menu.Item>
             </Menu>
         </div>
 

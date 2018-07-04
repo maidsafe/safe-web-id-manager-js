@@ -24,7 +24,7 @@ class App extends React.Component
         const { safeAuthorise, safe } = this.props;
         const { idApp } = safe;
 
-        if( ! idApp )
+        if ( !idApp )
         {
             safeAuthorise();
         }
@@ -37,6 +37,7 @@ class App extends React.Component
             // , match
             , addWebId
             , getAvailableWebIds
+            , getWebId
             , updateWebId
             , safe
         } = this.props;
@@ -66,7 +67,18 @@ class App extends React.Component
                                         render={ () =>
                                             <List webIds={ webIds } getAvailableWebIds={ getAvailableWebIds } idApp={ safe.idApp } /> }
                                     />
-                                    <Route path="/edit" render={ ( props ) => <Editor webIds={ webIds } { ...props } updateWebId={ updateWebId } /> } />
+                                    <Route
+                                        path="/edit/:title"
+                                        render={
+                                            ( props ) => ( <Editor
+                                                webIds={ webIds }
+                                                idApp={ safe.idApp }
+                                                { ...props }
+                                                updateWebId={ updateWebId }
+                                                getWebId={ getWebId }
+                                            /> )
+                                        }
+                                    />
                                     <Route path="/create/new" render={ props => <IdForm submit={ addWebId } idApp={ safe.idApp } { ...props } /> } />
                                     <Route path="/" render={ () => <Redirect to="/list" /> } />
                                 </Switch>

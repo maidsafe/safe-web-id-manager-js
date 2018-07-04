@@ -102,16 +102,6 @@ describe( 'App', () =>
 
     describe( '/edit/:name', () =>
     {
-        it( 'should have not have idForm if no name given', () =>
-        {
-            props = { ...props };
-
-            wrapper = mount( <MemoryRouter initialEntries={ ['/edit'] } >
-                <App { ...props } />
-                             </MemoryRouter> );
-            expect( wrapper.find( 'Editor' ).length ).toBe( 1 );
-            expect( wrapper.find( 'IdForm' ).length ).toBe( 0 );
-        } );
 
         it( 'should have idForm if name given', () =>
         {

@@ -28,7 +28,6 @@ const sanitizePayload = ( payload ) =>
 };
 
 
-
 export const {
     addWebId,
     updateWebId,
@@ -53,7 +52,7 @@ export const {
             await webId.create( newWebId, newWebId.nickname );
 
             console.log( 'WebId created on the network.' );
-            history.push('/'); // back to main page
+            history.push( '/' ); // back to main page
 
             return newWebId;
 
@@ -100,31 +99,34 @@ export const {
 
         return updatedWebId;
     },
-    [TYPES.GET_WEB_ID] : async ( payload ) => {
+    [TYPES.GET_WEB_ID] : async ( payload ) =>
+    {
+        console.log( 'GetWebId action.' );
         const { idApp, webId } = payload;
+        console.log( 'gottt WebId.', webId );
 
         if ( window.name ) return { ...webId }; // jest short circuit
 
         const targetXorName = webId.xorName;
-        const targetTypeTag = webId.typeTag;
+        const targetTypeTag = parseInt( webId.typeTag );
         // TODO: Helper this function upppp
-        const newMd = await idApp.mutableData.newPublic(targetXorName, targetTypeTag);
-        const fetchedWebId = await newMd.emulateAs('WebID');
+        const newMd = await idApp.mutableData.newPublic( targetXorName, targetTypeTag );
+        const fetchedWebId = await newMd.emulateAs( 'WebID' );
         await fetchedWebId.fetchContent();
-        const serialised = await fetchedWebId.serialise('application/ld+json');
+        const serialised = await fetchedWebId.serialise( 'application/ld+json' );
 
-        console.log("GOT WEBIDDDD", serialised);
+        console.log( 'GOT WEBIDDDD', serialised );
 
         return serialised;
     },
     [TYPES.GET_AVAILABLE_WEB_IDS] : async ( payload ) =>
     {
-        console.log('Getting available ids')
+        console.log( 'Getting available ids' );
         const { idApp } = payload;
 
         if ( window.name ) return []; // jest short circuit
 
-        let webIds = await idApp.web.getWebIds( );
+        const webIds = await idApp.web.getWebIds( );
 
         return webIds;
     }

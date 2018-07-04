@@ -60,7 +60,7 @@ class IdList extends React.Component
                 <List>
                     { webIds.map( ( webId, i ) => (
                         <List.Item key={ i }>
-                            <Link to={ `${PATHS.EDIT}/${webId.title}` }>{webId.title}</Link>
+                        <div style={{marginRight: '1rem'}}>{`${webId.title}`}</div><Link to={ `${PATHS.EDIT}/${webId.title}` }>edit</Link>
                         </List.Item>
                     ) )}
                 </List>
