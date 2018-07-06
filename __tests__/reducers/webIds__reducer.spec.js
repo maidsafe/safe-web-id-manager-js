@@ -55,23 +55,6 @@ describe( 'webIds reducer', () =>
         } );
     } );
 
-    describe( 'GET_WEB_ID', () =>
-    {
-        it( 'should handle adding a webId', () =>
-        {
-            const updatedPayload = { name: 'nottestttyyy', id: 1, email: 'here' };
-            const xorName = 'testttyyy';
-            const updatedState = webIdsReducer( [{ name: 'something', id: 2 }, { xorName, id: 1 , typeTag: 26221 }], {
-                type    : TYPES.GET_WEB_ID,
-                payload : updatedPayload
-            } );
-
-            expect( updatedState[1].name ).toEqual( updatedPayload.name );
-            expect( updatedState[1].email ).toEqual( updatedPayload.email );
-            expect( updatedState[1].xorName ).toEqual( xorName );
-        } );
-    } );
-
     describe( 'GET_AVAILABLE_WEB_IDS', () =>
     {
         it( 'should handle replacing current webIds', () =>

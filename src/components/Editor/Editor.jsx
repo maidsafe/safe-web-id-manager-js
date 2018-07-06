@@ -12,7 +12,6 @@ export default class Editor extends React.Component
         webIds      : PropTypes.arrayOf( PropTypes.object ),
         idApp       : PropTypes.shape(),
         match       : PropTypes.shape( { url: PropTypes.string } ).isRequired,
-        getWebId    : PropTypes.func.isRequired,
         updateWebId : PropTypes.func.isRequired
     }
 
@@ -21,64 +20,21 @@ export default class Editor extends React.Component
         webIds : []
     }
 
-    // componentDidMount = () =>
-    // {
-    //     this.getWebId();
-    // }
-    //
-    // componentWillReceiveProps = ( newProps ) =>
-    // {
-    //     const { idApp } = this.props;
-    //
-    //     // didnt have app, but now we doooo....
-    //     if( !idApp && newProps.idApp )
-    //     {
-    //         this.getWebId( { idApp: newProps.idApp, title: } );
-    //     }
-    // }
-    //
-    // shouldComponentUpdate = ( newProps ) =>
-    // {
-    //     console.log('new proppps', newProps)
-    //     const { webIds } = this.props;
-    //     const newWebIds = newProps.webIds;
-    //
-    //     return webIds !== newWebIds;
-    // }
-
-
-    getFullWebId = ( webId ) =>
-    {
-        const {
-            getWebId,
-            idApp,
-        } = this.props;
-
-
-        // name here used to decide if it's been fetched....
-        if ( idApp )
-        // if ( !webId.name && idApp )
-        {
-            getWebId( { idApp, webId } );
-        }
-
-        return webId;
-    }
-
-
     render()
     {
         const { match, updateWebId, webIds} = this.props;
 
+        // const nickname = webId["#me"].nick || webId["#me"].name;
 
-        const webId = webIds.find( id => id.title === match.params.title );
+        const webId = webIds.find( id => id["#me"].nick === match.params.nickname );
 
-        if( !this.doneTheThing )
-        {
-            const id = this.getFullWebId( webId );
-            this.doneTheThing = true;
-        }
+        console.log('EDITOR WEBIDDDDD', webId)
 
+        // if( !this.doneTheThing )
+        // {
+        //     // const id = this.getFullWebId( webId );
+        //     // this.doneTheThing = true;
+        // }
 
         // if theres no complete webId.... defined by... `name?`
         // then trigger get...?
@@ -90,7 +46,7 @@ export default class Editor extends React.Component
                     // { ...props }
                     submit={ updateWebId }
 
-                    id={  {} }
+                    id={ webId }
                 />
             </div>
         );

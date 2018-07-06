@@ -13,6 +13,8 @@ export const {
 } = createActions( {
     [TYPES.SAFE_AUTHORISE] : async () =>
     {
+
+        console.log('Authorising safe app action...')
         if ( window.name ) return; // jest short circuit
 
         if ( !safe )

@@ -15,6 +15,7 @@ describe( 'webIds actions', () =>
         expect.assertions(3);
 
         const payload = {
+            idApp : {},
             webId: {
                 name : 'testerton'
             }
@@ -53,27 +54,6 @@ describe( 'webIds actions', () =>
         expect( resultPayload ).toEqual( payload.webId );
     } );
 
-
-    it( 'should GET_WEB_ID', async () =>
-    {
-        const payload = {
-            webId: {
-                xorName : 'testerton',
-                typeTag   : 'asdasdad'
-            }
-        };
-
-        const expectedAction = {
-            type : webIdsActions.TYPES.GET_WEB_ID
-        };
-
-        const res = webIdsActions.getWebId( payload )
-        const resultPayload = await res.payload;
-
-        expect( res ).toMatchObject( expectedAction );
-        expect( resultPayload ).toBeType( 'object' );
-        // expect( resultPayload ).toEqual( payload.webId );
-    } );
 
     it( 'should GET_AVAILABLE_WEB_IDS', async () =>
     {

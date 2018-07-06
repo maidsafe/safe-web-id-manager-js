@@ -22,12 +22,17 @@ const defaultId = {
  */
 const mapPropsToFields = ( { id } ) =>
 {
+
     // if( !id ) return;
-    const idToUse = id || defaultId;
+    let idToUse = id || defaultId;
+
+    idToUse = idToUse['#me'] || idToUse;
+
+    console.log('MAPPPPPPPPPPPPPPPPPPPPPING', idToUse)
     return {
-        nickname : Form.createFormField( {
+        nick : Form.createFormField( {
             ...idToUse,
-            value : idToUse.nickname || '',
+            value : idToUse.nick || '',
         } ),
         name : Form.createFormField( {
             ...idToUse,
@@ -35,15 +40,15 @@ const mapPropsToFields = ( { id } ) =>
         } ),
         uri : Form.createFormField( {
             ...idToUse,
-            value : idToUse.uri || '',
+            value : idToUse["@id"] || '',
         } ),
         website : Form.createFormField( {
             ...idToUse,
             value : idToUse.website || '',
         } ),
-        avatar : Form.createFormField( {
+        image : Form.createFormField( {
             ...idToUse,
-            value : idToUse.avatar || '',
+            value : idToUse.image || '',
         } ),
         // pk : Form.createFormField( {
         //     ...id,
@@ -61,11 +66,11 @@ class IdForm extends React.Component
 {
     static propTypes = {
         id : PropTypes.shape( {
-            nickname : PropTypes.string,
+            nick : PropTypes.string,
             name     : PropTypes.string,
             website  : PropTypes.string,
             uri      : PropTypes.string,
-            avatar   : PropTypes.string,
+            image   : PropTypes.string,
             pk       : PropTypes.string
         } ),
         submit : PropTypes.func.isRequired
@@ -87,7 +92,7 @@ class IdForm extends React.Component
             if ( !err )
             {
                 console.log( 'Received values of form: ', history, values, imgBase64 );
-                const webIdWithImage = { ...values, avatar: imgBase64 };
+                const webIdWithImage = { ...values, image: imgBase64 };
 
                 //history to move us on a page when successful
                 submit( { idApp, webId: webIdWithImage, history } );
@@ -106,7 +111,7 @@ class IdForm extends React.Component
         return (
             <Form className="jest-form" layout="vertical" onSubmit={ this.handleSubmit } >
                 <FormItem label="nickname" >
-                    {getFieldDecorator( 'nickname', {
+                    {getFieldDecorator( 'nick', {
                         rules : [{ required: true, message: 'Please input a nickname, this will be used to identify this WebId!' }],
                     } )( <Input
                         // and icons removed as attempts to access a font online
@@ -140,7 +145,7 @@ class IdForm extends React.Component
                     /> )}
                 </FormItem>
                 <FormItem type="input" label="avatar">
-                    {getFieldDecorator( 'avatar', {
+                    {getFieldDecorator( 'image', {
                         rules : [],
                     } )( <Avatar ref={(c)=>{this.theAvatar = c }}/> )}
                 </FormItem>

@@ -58,6 +58,7 @@ class Avatar extends React.Component
   }
   render()
   {
+      const { value } = this.props;
       const uploadButton = (
           <div>
               { this.state.loading ? 'loading' : '' }
@@ -65,7 +66,7 @@ class Avatar extends React.Component
           </div>
       );
 
-      const imageUrl = this.state.imageUrl;
+      const imageUrl = this.state.imageUrl || value;
       return (
           <Upload
               ref={ ( c ) =>

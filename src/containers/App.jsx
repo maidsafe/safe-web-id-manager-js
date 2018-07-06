@@ -24,11 +24,14 @@ class App extends React.Component
         const { safeAuthorise, safe } = this.props;
         const { idApp } = safe;
 
+        console.log('DID MOUNT!?', idApp);
+
         if ( !idApp )
         {
             safeAuthorise();
         }
     }
+
 
     render = () =>
     {
@@ -68,7 +71,7 @@ class App extends React.Component
                                             <List webIds={ webIds } getAvailableWebIds={ getAvailableWebIds } idApp={ safe.idApp } /> }
                                     />
                                     <Route
-                                        path="/edit/:title"
+                                        path="/edit/:nickname"
                                         render={
                                             ( props ) => ( <Editor
                                                 webIds={ webIds }

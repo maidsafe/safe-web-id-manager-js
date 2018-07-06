@@ -48,6 +48,23 @@ class IdList extends React.Component
     {
         const { webIds } = this.props;
 
+        const IdList =  webIds.map( ( webId, i ) => {
+
+            let nickname = webId.nick;
+
+            if( webId["#me"] )
+            {
+                nickname = webId['#me'].nick;
+            }
+
+            return (
+                <List.Item key={ i }>
+                    <div style={{marginRight: '1rem'}}>{`${nickname}`}</div><Link to={ `${PATHS.EDIT}/${nickname}` }>edit</Link>
+                </List.Item>
+            )
+        }
+        );
+
         return (
             <div>
                 <h2>Your Current WebIds:</h2>
@@ -58,11 +75,7 @@ class IdList extends React.Component
                 >Update
                 </Button>
                 <List>
-                    { webIds.map( ( webId, i ) => (
-                        <List.Item key={ i }>
-                        <div style={{marginRight: '1rem'}}>{`${webId.title}`}</div><Link to={ `${PATHS.EDIT}/${webId.title}` }>edit</Link>
-                        </List.Item>
-                    ) )}
+                    {IdList}
                 </List>
             </div>
         );
