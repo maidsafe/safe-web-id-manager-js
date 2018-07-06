@@ -47,17 +47,12 @@ export const {
 
         if ( window.name ) return newWebId; // jest short circuit
 
-        console.log('newWEbiddddd', newWebId, idApp )
         try
         {
             const md = await idApp.mutableData.newRandomPublic( TYPE_TAG );
             await md.quickSetup( {} );
-            console.log('HEREWEARE', newWebId, newWebId.nick)
             const webId = await md.emulateAs( 'WebID' );
             await webId.create( newWebId, newWebId.nick );
-            console.log('HEREWEARE 222222222')
-
-            // message.success( 'WebId created on the network.' );
         }
         catch ( e )
         {
@@ -72,36 +67,38 @@ export const {
     [TYPES.UPDATE_WEB_ID] : async ( payload ) =>
     {
         const { idApp, webId } = payload;
-        const updatedWebId = sanitizeWebId( webId );
 
-        if ( window.name ) return webId; // jest short circuit
+        if( !idApp ) throw new Error( 'No idApp provided to update action' );
+
+        const newWebId = sanitizeWebId( webId );
+
+        if ( window.name ) return newWebId; // jest short circuit
 
         try
         {
+            const mdUri =  newWebId["@id"] ;
 
+            const { serviceMd, type, path } = await idApp.fetch( mdUri );
 
-            // const md = await idApp.mutableData.newRandomPublic( TYPE_TAG );
-            // await md.quickSetup({});
-            // const webId = await md.emulateAs('WebID');
-            // await webId.create(profile);
-            //
-            // profile.name = 'Gabriel Updated';
-            // await webId.update(profile);
-            //
-            // await md.quickSetup({});
-            //
-            // const webId = await md.emulateAs( 'WebID' );
-            // await webId.create( updatedWebId );
-            //
-            // console.log( 'WebId created on the network.' );
-            // message.success( 'WebId created on the network.' );
+            let pulledWebId;
+            if (type === 'RDF') {
+                pulledWebId = await serviceMd.emulateAs('RDF');
+                await pulledWebId.nowOrWhenFetched();
+                pulledWebId = await serviceMd.emulateAs('webId');
+            }
+
+            await pulledWebId.update(newWebId);
+
         }
         catch ( e )
         {
-            console.log( 'error in updateWebId', e );
+            console.log( 'Error in updateWebId', e );
+            return e;
         }
 
-        return updatedWebId;
+        console.log( 'WebId updated on the network.' );
+        // history.push( '/' ); // back to main page
+        return newWebId;
     },
     [TYPES.GET_AVAILABLE_WEB_IDS] : async ( payload ) =>
     {

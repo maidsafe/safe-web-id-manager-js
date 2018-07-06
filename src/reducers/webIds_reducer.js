@@ -14,7 +14,7 @@ export default ( state = initialState, action ) =>
         }
         case TYPES.UPDATE_WEB_ID:
         {
-            const oldIdIndex = state.findIndex( webId => webId.id === payload.id );
+            const oldIdIndex = state.findIndex( webId => webId['@id'] === payload['@id'] );
             const oldId = state[oldIdIndex];
             const updatedId = { ...oldId, ...payload };
 

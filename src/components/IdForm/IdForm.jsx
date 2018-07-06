@@ -20,15 +20,13 @@ const defaultId = {
  * the form with passed values.
  * @param  {Object} id webId object
  */
-const mapPropsToFields = ( { id } ) =>
+const mapPropsToFields = ( { webId } ) =>
 {
-
     // if( !id ) return;
-    let idToUse = id || defaultId;
+    let idToUse = webId || defaultId;
 
     idToUse = idToUse['#me'] || idToUse;
 
-    console.log('MAPPPPPPPPPPPPPPPPPPPPPING', idToUse)
     return {
         nick : Form.createFormField( {
             ...idToUse,
@@ -40,7 +38,7 @@ const mapPropsToFields = ( { id } ) =>
         } ),
         uri : Form.createFormField( {
             ...idToUse,
-            value : idToUse["@id"] || '',
+            value : idToUse['@id'] || '',
         } ),
         website : Form.createFormField( {
             ...idToUse,
@@ -65,37 +63,46 @@ const mapPropsToFields = ( { id } ) =>
 class IdForm extends React.Component
 {
     static propTypes = {
-        id : PropTypes.shape( {
-            nick : PropTypes.string,
-            name     : PropTypes.string,
-            website  : PropTypes.string,
-            uri      : PropTypes.string,
+        webId : PropTypes.shape( {
+            nick    : PropTypes.string,
+            name    : PropTypes.string,
+            website : PropTypes.string,
+            uri     : PropTypes.string,
             image   : PropTypes.string,
-            pk       : PropTypes.string
+            pk      : PropTypes.string
         } ),
         submit : PropTypes.func.isRequired
     }
     static defaultProps = {
-        id : defaultId
+        webId : defaultId
     }
 
     handleSubmit = ( e ) =>
     {
         e.preventDefault();
 
-        const { match, submit, idApp, history } = this.props;
+        const {
+            match, submit, idApp, history, webId
+        } = this.props;
 
-        const imgBase64 = this.theAvatar.state.imageUrl ;
+        const imgBase64 = this.theAvatar.state.imageUrl;
 
         this.props.form.validateFields( ( err, values ) =>
         {
             if ( !err )
             {
-                console.log( 'Received values of form: ', history, values, imgBase64 );
-                const webIdWithImage = { ...values, image: imgBase64 };
+                let image = imgBase64;
 
-                //history to move us on a page when successful
-                submit( { idApp, webId: webIdWithImage, history } );
+                if ( !image && webId && webId['#me'] )
+                {
+                    image = webId['#me'].image;
+                }
+
+                const webIdWithImageAndUpdates = { ...webId, ...values, image };
+                console.log( 'Updating with', webIdWithImageAndUpdates, imgBase64, webId );
+
+                // history to move us on a page when successful
+                submit( { idApp, webId: webIdWithImageAndUpdates, history } );
 
                 // this.setState({created: true })
             }
@@ -107,12 +114,11 @@ class IdForm extends React.Component
     {
         const { getFieldDecorator } = this.props.form;
 
-        const { id } = this.props;
         return (
             <Form className="jest-form" layout="vertical" onSubmit={ this.handleSubmit } >
                 <FormItem label="nickname" >
                     {getFieldDecorator( 'nick', {
-                        rules : [{ required: true, message: 'Please input a nickname, this will be used to identify this WebId!' }],
+                        rules : [{ required: true, message: 'Please input a nickname, this will be used to entify this WebId!' }],
                     } )( <Input
                         // and icons removed as attempts to access a font online
                         // prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
@@ -130,7 +136,7 @@ class IdForm extends React.Component
                 </FormItem>
                 <FormItem label="uri" >
                     {getFieldDecorator( 'uri', {
-                        rules : [{ required: true, message: 'publicId location for this webId.'}],
+                        rules : [{ required: true, message: 'publicId location for this webId.' }],
                     } )( <Input
                         // prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
                         placeholder="public name (safe://something)"
@@ -147,7 +153,11 @@ class IdForm extends React.Component
                 <FormItem type="input" label="avatar">
                     {getFieldDecorator( 'image', {
                         rules : [],
-                    } )( <Avatar ref={(c)=>{this.theAvatar = c }}/> )}
+                    } )( <Avatar ref={ ( c ) =>
+                    {
+                        this.theAvatar = c;
+                    } }
+                    /> )}
                 </FormItem>
                 {/* <FormItem label="publickey" >
                     {getFieldDecorator( 'publickey', {

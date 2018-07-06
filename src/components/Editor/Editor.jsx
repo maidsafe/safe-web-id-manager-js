@@ -22,7 +22,7 @@ export default class Editor extends React.Component
 
     render()
     {
-        const { match, updateWebId, webIds} = this.props;
+        const { match, idApp, updateWebId, webIds} = this.props;
 
         // const nickname = webId["#me"].nick || webId["#me"].name;
 
@@ -45,8 +45,8 @@ export default class Editor extends React.Component
                 <IdForm
                     // { ...props }
                     submit={ updateWebId }
-
-                    id={ webId }
+                    idApp={ idApp }
+                    webId={ webId }
                 />
             </div>
         );
