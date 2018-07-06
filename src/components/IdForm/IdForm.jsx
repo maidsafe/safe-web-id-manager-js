@@ -136,7 +136,9 @@ class IdForm extends React.Component
                 </FormItem>
                 <FormItem label="uri" >
                     {getFieldDecorator( 'uri', {
-                        rules : [{ required: true, message: 'publicId location for this webId.' }],
+                        rules : [
+                            { required: true, message: 'publicId location for this webId.' },
+                        {pattern: /^safe:\/\/[^ "]+$/, message: 'This must be a valid safe:// url'}],
                     } )( <Input
                         // prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
                         placeholder="public name (safe://something)"
@@ -144,7 +146,7 @@ class IdForm extends React.Component
                 </FormItem>
                 <FormItem label="website" >
                     {getFieldDecorator( 'website', {
-                        rules : [],
+                        rules : [{pattern: /^safe:\/\/[^ "]+$/, message: 'This must be a valid safe:// url'}],
                     } )( <Input
                         // prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
                         placeholder="public name (safe://something)"
