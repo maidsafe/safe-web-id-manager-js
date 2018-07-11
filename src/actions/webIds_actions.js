@@ -13,17 +13,17 @@ const TYPE_TAG = 16048;
 
 const sanitizeWebId = ( webId ) =>
 {
-    console.log('sanitizing', webId)
     const newWebId = {};
 
     // sanitize for webid rdf for now.
     Object.keys( webId ).forEach( key =>
     {
-        if ( webId[key] && webId[key].length > 0 )
+        if ( webId[key] && typeof webId[key] !== 'undefined' )
         {
             newWebId[key] = webId[key];
         }
     } );
+    console.log('post sanitizing', webId)
 
     return newWebId;
 };
@@ -51,8 +51,8 @@ export const {
         {
             const md = await idApp.mutableData.newRandomPublic( TYPE_TAG );
             await md.quickSetup( {} );
-            const webId = await md.emulateAs( 'WebID' );
-            await webId.create( newWebId, newWebId.nick );
+            const webIdRDF = await md.emulateAs( 'WebID' );
+            await webIdRDF.create( newWebId, newWebId.nick );
         }
         catch ( e )
         {

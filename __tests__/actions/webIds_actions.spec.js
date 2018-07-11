@@ -36,20 +36,22 @@ describe( 'webIds actions', () =>
     it( 'should UDPATE_WEB_ID', async () =>
     {
         const payload = {
+            idApp : {},
             webId: {
-                name : 'testerton',
-                id   : 6
+                name : 'testerton update',
+                '@id'   : 6
             }
         };
 
         const expectedAction = {
-            type : webIdsActions.TYPES.UPDATE_WEB_ID
+            type : webIdsActions.TYPES.UPDATE_WEB_ID,
+            payload: payload.webId
         };
 
         const res = webIdsActions.updateWebId( payload )
         const resultPayload = await res.payload;
 
-        expect( res ).toMatchObject( expectedAction );
+        expect( res.type ).toEqual( expectedAction.type );
         expect( resultPayload ).not.toHaveProperty( 'idApp' );
         expect( resultPayload ).toEqual( payload.webId );
     } );

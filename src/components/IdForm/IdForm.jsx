@@ -8,11 +8,10 @@ const FormItem = Form.Item;
 
 const defaultId = {
     name     : '',
-    nickname : '',
-    uri      : 'safe://',
-    website  : 'safe://',
-    avatar   : '',
-    pk       : ''
+    nick : '',
+    uri      : '',
+    website  : '',
+    image   : ''
 };
 
 /**
@@ -116,7 +115,7 @@ class IdForm extends React.Component
 
         return (
             <Form className="jest-form" layout="vertical" onSubmit={ this.handleSubmit } >
-                <FormItem label="nickname" >
+                <FormItem label="Nickname (used as webId identifier)" >
                     {getFieldDecorator( 'nick', {
                         rules : [{ required: true, message: 'Please input a nickname, this will be used to entify this WebId!' }],
                     } )( <Input
@@ -125,7 +124,7 @@ class IdForm extends React.Component
                         placeholder="nickname"
                     /> )}
                 </FormItem>
-                <FormItem label="name" >
+                <FormItem label="Name" >
                     {getFieldDecorator( 'name', {
                         rules : [{ required: true, message: 'Please input a webId name.' }],
                     } )( <Input
@@ -144,7 +143,7 @@ class IdForm extends React.Component
                         placeholder="public name (safe://something)"
                     /> )}
                 </FormItem>
-                <FormItem label="website" >
+                <FormItem label="Website" >
                     {getFieldDecorator( 'website', {
                         rules : [{pattern: /^safe:\/\/[^ "]+$/, message: 'This must be a valid safe:// url'}],
                     } )( <Input
@@ -152,7 +151,7 @@ class IdForm extends React.Component
                         placeholder="public name (safe://something)"
                     /> )}
                 </FormItem>
-                <FormItem type="input" label="avatar">
+                <FormItem type="input" label="Image">
                     {getFieldDecorator( 'image', {
                         rules : [],
                     } )( <Avatar ref={ ( c ) =>
