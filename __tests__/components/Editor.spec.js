@@ -36,30 +36,28 @@ describe( 'Editor', () =>
     {
         beforeEach( () =>
         {
-            // props = { ...props };
-
-            wrapper = mount( <MemoryRouter initialEntries={ ['/edit/josh'] } >
-            <Editor { ...props } />
-        </MemoryRouter>);
+            props = { ...props, match: { url: '/editor/josh'} };
+            wrapper = mount( <Editor { ...props } />);
         } );
 
-        // it( 'should have idForm ', () =>
-        // {
-        //     expect( wrapper.find( 'IdForm' ).length ).toBe( 1 );
-        // } );
+        it( 'should not have idForm if no name given', () =>
+        {
+            expect( wrapper.find( 'IdForm' ).length ).toBe( 0 );
+        } );
 
-        // it.only( 'should have idForm if name given', () =>
-        // {
-        //     props = { ...props, match: { url: 'editor/name'} };
-        //
-        //     wrapper = mount(
-        //          <MemoryRouter initialEntries={ ['editor/name'] } initialIndex={0}  >
-        //             <Editor  />
-        //          </MemoryRouter>
-        //                  );
-        //
-        //     expect( wrapper.find( 'IdForm' ).length ).toBe( 1 );
-        // } );
+        it( 'should have idForm if name given', () =>
+        {
+            const testProps = { ...props };
+            testProps.match.params = { nickname: 'josh' }
+
+            wrapper = mount(
+                 // <MemoryRouter initialEntries={ ['/','editor','josh']} initialIndex={0}   >
+                    <Editor  {...props} />
+                 // </MemoryRouter>
+                         );
+
+            expect( wrapper.find( 'IdForm' ).length ).toBe( 1 );
+        } );
     } );
 
 } );

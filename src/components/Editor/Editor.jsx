@@ -23,12 +23,10 @@ export default class Editor extends React.Component
     render()
     {
         const { match, idApp, updateWebId, webIds, history } = this.props;
+        const params = match.params || {}; //or for testing.
+        const nickToMatch = params.nickname || '';
 
-        if( !match.params ) return <div>noparms</div>
-
-
-        const webId = webIds.find( id => id.nick === match.params.nickname );
-
+        const webId = webIds.find( id => id.nick === nickToMatch );
         if( !webId ) return <div>No matching WebId found</div>;
 
         return (

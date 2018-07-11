@@ -81,7 +81,6 @@ export const {
             const mdUri =  newWebId.uri ;
 
             const { serviceMd, type, path } = await idApp.fetch( mdUri );
-            console.log('THE THINGSSSSSSSS', serviceMd, type );
 
             let pulledWebId;
             if (type === 'RDF') {
@@ -89,7 +88,6 @@ export const {
                 await pulledWebId.nowOrWhenFetched();
                 pulledWebId = await serviceMd.emulateAs('webId');
             }
-            console.log('ABOUT TO UPDATE WITTTHHHHHHH')
             await pulledWebId.update(newWebId);
 
         }
