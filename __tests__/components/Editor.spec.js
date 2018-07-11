@@ -13,7 +13,11 @@ describe( 'Editor', () =>
     {
         props = {
             match : { url: '/editor/josh' },
-            updateWebId : jest.fn()
+            updateWebId : jest.fn(),
+            webIds : [{
+                nick: 'josh',
+                uri: 'safe://lalala'
+            }]
         };
 
         wrapper = shallow( <Editor { ...props } /> );
@@ -32,15 +36,17 @@ describe( 'Editor', () =>
     {
         beforeEach( () =>
         {
-            props = { ...props };
+            // props = { ...props };
 
-            wrapper = mount( <Editor { ...props } /> );
+            wrapper = mount( <MemoryRouter initialEntries={ ['/edit/josh'] } >
+            <Editor { ...props } />
+        </MemoryRouter>);
         } );
 
-        it( 'should have idForm ', () =>
-        {
-            expect( wrapper.find( 'IdForm' ).length ).toBe( 1 );
-        } );
+        // it( 'should have idForm ', () =>
+        // {
+        //     expect( wrapper.find( 'IdForm' ).length ).toBe( 1 );
+        // } );
 
         // it.only( 'should have idForm if name given', () =>
         // {

@@ -22,23 +22,15 @@ export default class Editor extends React.Component
 
     render()
     {
-        const { match, idApp, updateWebId, webIds} = this.props;
+        const { match, idApp, updateWebId, webIds, history } = this.props;
 
-        // const nickname = webId["#me"].nick || webId["#me"].name;
+        if( !match.params ) return <div>noparms</div>
 
-        const webId = webIds.find( id => id["#me"].nick === match.params.nickname );
 
-        console.log('EDITOR WEBIDDDDD', webId)
+        const webId = webIds.find( id => id.nick === match.params.nickname );
 
-        // if( !this.doneTheThing )
-        // {
-        //     // const id = this.getFullWebId( webId );
-        //     // this.doneTheThing = true;
-        // }
+        if( !webId ) return <div>No matching WebId found</div>;
 
-        // if theres no complete webId.... defined by... `name?`
-        // then trigger get...?
-        // but not on each... on getProps...
         return (
             <div className="wrapper">
                 <h2>{ `Editing`}</h2>
@@ -47,6 +39,7 @@ export default class Editor extends React.Component
                     submit={ updateWebId }
                     idApp={ idApp }
                     webId={ webId }
+                    history ={ history }
                 />
             </div>
         );

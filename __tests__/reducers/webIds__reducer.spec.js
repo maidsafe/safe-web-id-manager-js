@@ -44,8 +44,8 @@ describe( 'webIds reducer', () =>
     {
         it( 'should handle updating a webId', () =>
         {
-            const updatedPayload = { name: 'nottestttyyy', '@id': 1, email: 'here' };
-            const updatedState = webIdsReducer( [{ name: 'something', '@id': 2 }, { name: 'testttyyy', '@id': 1 }], {
+            const updatedPayload = { name: 'nottestttyyy', uri: 1, email: 'here' };
+            const updatedState = webIdsReducer( [{ name: 'something', uri: 2 }, { name: 'testttyyy', 'uri': 1 }], {
                 type    : TYPES.UPDATE_WEB_ID,
                 payload : updatedPayload
             } );
@@ -59,9 +59,9 @@ describe( 'webIds reducer', () =>
     {
         it( 'should handle replacing current webIds', () =>
         {
-            const updatedPayload = [{ name: 'nottestttyyy', '@id': 1, email: 'here' }];
+            const updatedPayload = [{ name: 'nottestttyyy', uri: 1, email: 'here' }];
 
-            const updatedState = webIdsReducer( [{ name: 'something', '@id': 2 }, { xorName: 'lalala', '@id': 1 , typeTag: 26221 }], {
+            const updatedState = webIdsReducer( [{ name: 'something', uri: 2 }, { xorName: 'lalala', uri: 1 , typeTag: 26221 }], {
                 type    : TYPES.GET_AVAILABLE_WEB_IDS,
                 payload : updatedPayload
             } );

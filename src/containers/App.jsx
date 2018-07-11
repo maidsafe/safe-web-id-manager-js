@@ -24,8 +24,6 @@ class App extends React.Component
         const { safeAuthorise, safe } = this.props;
         const { idApp } = safe;
 
-        console.log('DID MOUNT!?', idApp);
-
         if ( !idApp )
         {
             safeAuthorise();

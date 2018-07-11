@@ -23,7 +23,7 @@ const sanitizeWebId = ( webId ) =>
             newWebId[key] = webId[key];
         }
     } );
-    console.log('post sanitizing', webId)
+    console.log('post sanitizing', newWebId)
 
     return newWebId;
 };
@@ -66,7 +66,7 @@ export const {
     },
     [TYPES.UPDATE_WEB_ID] : async ( payload ) =>
     {
-        const { idApp, webId } = payload;
+        const { idApp, webId, history } = payload;
 
         if( !idApp ) throw new Error( 'No idApp provided to update action' );
 
@@ -74,11 +74,14 @@ export const {
 
         if ( window.name ) return newWebId; // jest short circuit
 
+
+
         try
         {
-            const mdUri =  newWebId["@id"] ;
+            const mdUri =  newWebId.uri ;
 
             const { serviceMd, type, path } = await idApp.fetch( mdUri );
+            console.log('THE THINGSSSSSSSS', serviceMd, type );
 
             let pulledWebId;
             if (type === 'RDF') {
@@ -86,7 +89,7 @@ export const {
                 await pulledWebId.nowOrWhenFetched();
                 pulledWebId = await serviceMd.emulateAs('webId');
             }
-
+            console.log('ABOUT TO UPDATE WITTTHHHHHHH')
             await pulledWebId.update(newWebId);
 
         }
@@ -96,8 +99,10 @@ export const {
             return e;
         }
 
-        console.log( 'WebId updated on the network.' );
-        // history.push( '/' ); // back to main page
+        console.log( 'WebId updated on the network.', history );
+
+        //why is this undefined? poush to newnickname....
+        history.push( '/' ); // back to main page
         return newWebId;
     },
     [TYPES.GET_AVAILABLE_WEB_IDS] : async ( payload ) =>
@@ -109,6 +114,15 @@ export const {
 
         const webIds = await idApp.web.getWebIds( );
 
-        return webIds;
+        const actualIds = webIds.map( webId => {
+
+            console.log('WEBIDDDD RECEIVED', webId )
+            const me = webId['#me'];
+
+            me.uri = webId['@id'];
+
+            return me;
+        } )
+        return actualIds;
     }
 } );

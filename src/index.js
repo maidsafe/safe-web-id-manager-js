@@ -12,7 +12,7 @@ if ( window.webIdEventEmitter )
 {
     console.log( 'webId emitter exists!' );
 
-    window.webIdEventEmitter.on( 'update', ( webId ) =>
+    window.webIdEventEmitter.once( 'update', ( webId ) =>
     {
         console.log( 'WebId has been updated (though not sure what to do with it...)', webId );
     } );

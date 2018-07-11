@@ -37,7 +37,7 @@ const mapPropsToFields = ( { webId } ) =>
         } ),
         uri : Form.createFormField( {
             ...idToUse,
-            value : idToUse['@id'] || '',
+            value : idToUse.uri || '',
         } ),
         website : Form.createFormField( {
             ...idToUse,
@@ -92,13 +92,13 @@ class IdForm extends React.Component
             {
                 let image = imgBase64;
 
-                if ( !image && webId && webId['#me'] )
+                if ( !image && webId )
                 {
-                    image = webId['#me'].image;
+                    image = webId.image;
                 }
 
                 const webIdWithImageAndUpdates = { ...webId, ...values, image };
-                console.log( 'Updating with', webIdWithImageAndUpdates, imgBase64, webId );
+                console.log( 'ON CLICK:: Updating with', webIdWithImageAndUpdates, history );
 
                 // history to move us on a page when successful
                 submit( { idApp, webId: webIdWithImageAndUpdates, history } );
