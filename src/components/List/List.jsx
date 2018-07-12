@@ -46,7 +46,25 @@ class IdList extends React.Component
 
     render = () =>
     {
-        const { webIds } = this.props;
+        const { idApp, webIds, history } = this.props;
+
+        // TODO: Make real loading state.
+        const isLoading = !idApp;
+
+        const createNewWebId = () =>
+        {
+            history.push( PATHS.CREATE )
+        }
+        //
+        // if ( !isLoading && webIds.length === 0 )
+        // {
+        //     return ( <Button
+        //         onClick={ createNewWebId }
+        //         htmlType="submit"
+        //         type="primary"
+        //     >Create a WebId
+        //     </Button> );
+        // }
 
         const IdList = webIds.map( ( webId, i ) =>
         {
@@ -55,17 +73,15 @@ class IdList extends React.Component
             const image = webId.image;
 
             return (
-                <List.Item key={ i }
-                    actions={[ <Link to={ `${PATHS.EDIT}/${nickname}` }>edit</Link> ]}>
+                <List.Item
+                    key={ i }
+                    actions={ [<Link to={ `${PATHS.EDIT}/${nickname}` }>edit</Link>] }
+                >
                     <List.Item.Meta
-                        avatar={<Avatar src={image} />}
-                        title={nickname}
-                        description={uri}
+                        avatar={ <Avatar src={ image } /> }
+                        title={ nickname }
+                        description={ uri }
                     />
-
-                    {/* <div style={ { marginRight: '1rem' } }>{`${nickname}`}</div> */}
-                    {/* <div style={ { marginRight: '1rem' } }>{`${uri}`}</div> */}
-                    {/* <Link to={ `${PATHS.EDIT}/${nickname}` }>edit</Link> */}
                 </List.Item>
             );
         } );
@@ -74,12 +90,15 @@ class IdList extends React.Component
             <div>
                 <h2>Your Current WebIds:</h2>
                 <Button
-                    onClick={ this.handleGetIds }
+                    style={ { marginBottom: '20px'}}
+                    onClick={ createNewWebId }
                     htmlType="submit"
                     type="primary"
-                >Update
+                >Create new WebId
                 </Button>
-                <List>
+                <List
+                    loading={ isLoading }
+                >
                     {IdList}
                 </List>
             </div>

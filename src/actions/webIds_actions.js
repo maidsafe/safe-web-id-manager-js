@@ -113,8 +113,6 @@ export const {
         const webIds = await idApp.web.getWebIds( );
 
         const actualIds = webIds.map( webId => {
-
-            console.log('WEBIDDDD RECEIVED', webId )
             const me = webId['#me'];
 
             me.uri = webId['@id'];

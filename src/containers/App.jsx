@@ -35,6 +35,7 @@ class App extends React.Component
     {
         const {
             webIds
+            , history
             // , match
             , addWebId
             , getAvailableWebIds
@@ -66,7 +67,7 @@ class App extends React.Component
                                     <Route
                                         path="/list"
                                         render={ () =>
-                                            <List webIds={ webIds } getAvailableWebIds={ getAvailableWebIds } idApp={ safe.idApp } /> }
+                                            <List history={ history } webIds={ webIds } getAvailableWebIds={ getAvailableWebIds } idApp={ safe.idApp } /> }
                                     />
                                     <Route
                                         path="/edit/:nickname"
