@@ -60,7 +60,7 @@ class App extends React.Component
                     <Col span={ 24 }>
                         <Layout className={ styles.appContainer }>
                             <Route path="/" component={ Header } />
-                            <Content>
+                            <Content style={{ padding: '50px' }}>
 
                                 <Switch>
                                     <Route
