@@ -80,7 +80,9 @@ class IdList extends React.Component
                     <List.Item.Meta
                         avatar={ <Avatar src={ image } /> }
                         title={ nickname }
-                        description={ uri }
+                        description={
+                          <a target="_blank" style={{ color: 'MidnightBlue' }} href={uri}>{uri}</a>
+                        }
                     />
                 </List.Item>
             );
