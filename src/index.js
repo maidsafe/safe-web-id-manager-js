@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise';
@@ -37,9 +37,9 @@ const store = configureStore( {} );
 const reactRoot = document.getElementById( 'react-root' );
 
 render(
-    <BrowserRouter>
+    <HashRouter>
         <App store={ store } />
-    </BrowserRouter>
+    </HashRouter>
     ,
     reactRoot
 );
