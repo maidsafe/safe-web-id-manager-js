@@ -130,15 +130,15 @@ class IdForm extends React.Component
                     } )( <Input
                         // and icons removed as attempts to access a font online
                         // prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
-                        placeholder="Username"
+                        placeholder="full name"
                     /> )}
                 </FormItem>
-                <FormItem label="uri" >
+                <FormItem label="Web ID URI (not editable)" >
                     {getFieldDecorator( 'uri', {
                         rules : [
                             { required: true, message: 'publicId location for this webId.' },
                         {pattern: /^safe:\/\/[^ "]+$/, message: 'This must be a valid safe:// url'}],
-                    } )( <Input
+                    } )( <Input disabled={ this.props.webId.uri ? true : false }
                         // prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
                         placeholder="public name (safe://something)"
                     /> )}
