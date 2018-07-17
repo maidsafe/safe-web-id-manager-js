@@ -74,8 +74,6 @@ export const {
 
         if ( window.name ) return newWebId; // jest short circuit
 
-
-
         try
         {
             const mdUri =  newWebId.uri ;
@@ -84,12 +82,10 @@ export const {
 
             let pulledWebId;
             if (type === 'RDF') {
-                pulledWebId = await serviceMd.emulateAs('RDF');
-                await pulledWebId.nowOrWhenFetched();
-                pulledWebId = await serviceMd.emulateAs('webId');
+                pulledWebId = await serviceMd.emulateAs('WebID');
+                await pulledWebId.fetchContent();
             }
             await pulledWebId.update(newWebId);
-
         }
         catch ( e )
         {

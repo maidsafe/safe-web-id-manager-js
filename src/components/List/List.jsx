@@ -78,7 +78,13 @@ class IdList extends React.Component
                     actions={ [<Link to={ `${PATHS.EDIT}/${nickname}` }>edit</Link>] }
                 >
                     <List.Item.Meta
-                        avatar={ <Avatar src={ image } /> }
+                        avatar={ image ?
+                          <Avatar src={image} />
+                          :
+                          <Avatar style={{ backgroundColor: 'gray', verticalAlign: 'middle' }} >
+                            {nickname ? nickname.substring(0, 1).toUpperCase() : ''}
+                          </Avatar>
+                        }
                         title={ nickname }
                         description={
                           <a target="_blank" style={{ color: 'MidnightBlue' }} href={uri}>{uri}</a>
