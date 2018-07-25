@@ -73,10 +73,37 @@ class IdForm extends React.Component
             image   : PropTypes.string,
             pk      : PropTypes.string
         } ),
-        submit : PropTypes.func.isRequired
+        webIds             : PropTypes.arrayOf( PropTypes.shape ).isRequired,
+        submit             : PropTypes.func.isRequired,
+        getAvailableWebIds : PropTypes.func.isRequired,
+        idApp              : PropTypes.shape.isRequired
     }
     static defaultProps = {
         webId : defaultId
+    }
+
+
+    componentWillReceiveProps = ( newProps ) =>
+    {
+        const { idApp } = this.props;
+
+        // didnt have app, but now we doooo....
+        if ( !idApp && newProps.idApp && newProps.webIds.length === 0 )
+        {
+            this.getIds( newProps.idApp );
+        }
+    }
+
+    // TODO: Dry this out across components
+    getIds = ( passedIdApp ) =>
+    {
+        const { getAvailableWebIds, idApp } = this.props;
+
+        const appToUse = passedIdApp || idApp;
+        if ( appToUse )
+        {
+            getAvailableWebIds( { idApp: appToUse } );
+        }
     }
 
     handleSubmit = ( e ) =>
@@ -111,6 +138,20 @@ class IdForm extends React.Component
         } );
     }
 
+    validateUniqueId = async ( rule, value, callback ) =>
+    {
+        const { webIds, webId } = this.props;
+
+        // if we're editing do nothing...
+        if ( webId.uri ) return callback();
+
+        const foundId = webIds.find( aWebId =>
+            aWebId['@id'] === `safe://${value}#me` );
+
+        if ( foundId ) return callback( 'Error.' );
+
+        return callback();
+    }
 
     render = ( ) =>
     {
@@ -140,6 +181,7 @@ class IdForm extends React.Component
                     {getFieldDecorator( 'uri', {
                         rules : [
                             { required: true, message: 'publicId location for this webId.' },
+                            { validator: this.validateUniqueId, message: 'This must not be an existing WebId.' },
                             { pattern: uriRegex, message: 'This must be a valid safe:// url' }],
                     } )( <Input
                         disabled={ !!this.props.webId.uri }

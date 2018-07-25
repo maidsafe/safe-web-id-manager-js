@@ -61,7 +61,7 @@ class App extends React.Component
                     <Col span={ 24 }>
                         <Layout className={ styles.appContainer }>
                             <Route path="/" component={ Header } />
-                            <Content style={{ padding: '50px' }}>
+                            <Content style={ { padding: '50px' } }>
 
                                 <Switch>
                                     <Route
@@ -81,7 +81,16 @@ class App extends React.Component
                                             /> )
                                         }
                                     />
-                                    <Route path="/create/new" render={ props => <IdForm submit={ addWebId } idApp={ safe.idApp } { ...props } /> } />
+                                    <Route
+                                        path="/create/new"
+                                        render={ props => ( <IdForm
+                                            submit={ addWebId }
+                                            getAvailableWebIds={ getAvailableWebIds }
+                                            idApp={ safe.idApp }
+                                            webIds={ webIds }
+                                            { ...props }
+                                        /> ) }
+                                    />
                                     <Route path="/" render={ () => <Redirect to="/list" /> } />
                                 </Switch>
                             </Content>

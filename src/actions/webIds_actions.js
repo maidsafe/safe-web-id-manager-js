@@ -20,8 +20,6 @@ const sanitizeWebId = ( webId ) =>
     {
         if ( webId[key] && typeof webId[key] !== 'undefined' )
         {
-            console.log('keyyyyy', key, webId[key])
-
             newWebId[key] = webId[key];
             if( typeof newWebId[key] === 'string' )
             {
