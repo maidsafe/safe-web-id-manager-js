@@ -102,7 +102,7 @@ class IdList extends React.Component
                     onClick={ createNewWebId }
                     htmlType="submit"
                     type="primary"
-                >Create new WebId
+                >Create new WebId Profile
                 </Button>
                 <List
                     loading={ isLoading }
