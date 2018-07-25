@@ -71,7 +71,7 @@ class IdList extends React.Component
             const nickname = webId.nick;
             const uri = webId.uri;
             const image = webId.image;
-
+            const safeUri = `safe://${uri}`;
             return (
                 <List.Item
                     key={ i }
@@ -87,7 +87,7 @@ class IdList extends React.Component
                         }
                         title={ nickname }
                         description={
-                          <a target="_blank" style={{ color: 'MidnightBlue' }} href={uri}>{uri}</a>
+                          <a target="_blank" style={{ color: 'MidnightBlue' }} href={safeUri}>{safeUri}</a>
                         }
                     />
                 </List.Item>
