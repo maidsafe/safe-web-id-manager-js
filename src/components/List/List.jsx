@@ -58,7 +58,7 @@ class IdList extends React.Component
 
         const IdList = webIds.map( ( webId, i ) =>
         {
-            const nickname = webId.nick;
+            const nickname = webId.nick.length ? webId.nick : '';
             const { uri, image } = webId;
             const safeUri = `safe://${uri}`;
             return (

@@ -120,7 +120,7 @@ class IdForm extends React.Component
             <Form className="jest-form" layout="vertical" onSubmit={ this.handleSubmit } >
                 <FormItem label="Nickname (used as webId identifier)" >
                     {getFieldDecorator( 'nick', {
-                        rules : [{ required: true, message: 'Please input a nickname, this will be used to entify this WebId!' }],
+                        rules : [{ required: true, whitespace: true, message: 'Please input a nickname, this will be used to entify this WebId!' }],
                     } )( <Input
                         // and icons removed as attempts to access a font online
                         // prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
@@ -129,7 +129,7 @@ class IdForm extends React.Component
                 </FormItem>
                 <FormItem label="Name" >
                     {getFieldDecorator( 'name', {
-                        rules : [{ required: true, message: 'Please input a webId name.' }],
+                        rules : [{ required: true, whitespace: true, message: 'Please input a webId name.' }],
                     } )( <Input
                         // and icons removed as attempts to access a font online
                         // prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
