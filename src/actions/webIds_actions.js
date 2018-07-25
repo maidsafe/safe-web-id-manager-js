@@ -20,10 +20,15 @@ const sanitizeWebId = ( webId ) =>
     {
         if ( webId[key] && typeof webId[key] !== 'undefined' )
         {
-            newWebId[key] = webId[key];
+            newWebId[key] = webId[key].trim();
+
+            if ( key === 'uri' || key === 'website' )
+            {
+                newWebId[key] = `safe://${newWebId[key]}`;
+            }
         }
     } );
-    console.log('post sanitizing', newWebId)
+    console.log( 'post sanitizing', newWebId );
 
     return newWebId;
 };
@@ -38,10 +43,9 @@ export const {
 
     [TYPES.ADD_WEB_ID] : async ( payload ) =>
     {
-
         const { idApp, history, webId } = payload;
 
-        if( !idApp ) throw new Error( 'No idApp provided to action' );
+        if ( !idApp ) throw new Error( 'No idApp provided to action' );
 
         const newWebId = sanitizeWebId( webId );
 
@@ -68,7 +72,7 @@ export const {
     {
         const { idApp, webId, history } = payload;
 
-        if( !idApp ) throw new Error( 'No idApp provided to update action' );
+        if ( !idApp ) throw new Error( 'No idApp provided to update action' );
 
         const newWebId = sanitizeWebId( webId );
 
@@ -76,16 +80,17 @@ export const {
 
         try
         {
-            const mdUri =  newWebId.uri ;
+            const mdUri = newWebId.uri;
 
             const { serviceMd, type, path } = await idApp.fetch( mdUri );
 
             let pulledWebId;
-            if (type === 'RDF') {
-                pulledWebId = await serviceMd.emulateAs('WebID');
+            if ( type === 'RDF' )
+            {
+                pulledWebId = await serviceMd.emulateAs( 'WebID' );
                 await pulledWebId.fetchContent();
             }
-            await pulledWebId.update(newWebId);
+            await pulledWebId.update( newWebId );
         }
         catch ( e )
         {
@@ -95,7 +100,7 @@ export const {
 
         console.log( 'WebId updated on the network.', history );
 
-        //why is this undefined? poush to newnickname....
+        // why is this undefined? poush to newnickname....
         history.push( '/' ); // back to main page
         return newWebId;
     },
@@ -108,13 +113,20 @@ export const {
 
         const webIds = await idApp.web.getWebIds( );
 
-        const actualIds = webIds.map( webId => {
+        const actualIds = webIds.map( webId =>
+        {
             const me = webId['#me'];
 
-            me.uri = webId['@id'];
+            // remove what is appended later
+            me.uri = webId['@id'].replace( 'safe://', '' );
+
+            if( me.website )
+            {
+                me.website = me.website.replace( 'safe://', '' );
+            }
 
             return me;
-        } )
+        } );
         return actualIds;
     }
 } );

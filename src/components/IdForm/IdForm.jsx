@@ -6,11 +6,14 @@ import Avatar from '../Avatar/Avatar';
 
 const FormItem = Form.Item;
 
+const uriRegex = '^([-a-z0-9]{3,63}\\.)*?[a-z0-9][-a-z0-9]{0,61}[a-z0-9]\\.[a-z0-9][-a-z0-9]{0,61}[a-z0-9]{2,6}(/[-\\w@\\+\\.~#\\?&/=%]*)?$';
+
+
 const defaultId = {
-    name     : '',
-    nick : '',
-    uri      : '',
-    website  : '',
+    name    : '',
+    nick    : '',
+    uri     : '',
+    website : '',
     image   : ''
 };
 
@@ -137,18 +140,21 @@ class IdForm extends React.Component
                     {getFieldDecorator( 'uri', {
                         rules : [
                             { required: true, message: 'publicId location for this webId.' },
-                        {pattern: /^safe:\/\/[^ "]+$/, message: 'This must be a valid safe:// url'}],
-                    } )( <Input disabled={ this.props.webId.uri ? true : false }
+                            { pattern: uriRegex, message: 'This must be a valid safe:// url' }],
+                    } )( <Input
+                        disabled={ !!this.props.webId.uri }
+                        addonBefore="safe://"
                         // prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
-                        placeholder="public name (safe://something)"
+                        placeholder="public name"
                     /> )}
                 </FormItem>
                 <FormItem label="Website" >
                     {getFieldDecorator( 'website', {
-                        rules : [{pattern: /^safe:\/\/[^ "]+$/, message: 'This must be a valid safe:// url'}],
+                        rules : [{ pattern: uriRegex, message: 'This must be a valid safe:// url' }],
                     } )( <Input
+                        addonBefore="safe://"
                         // prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
-                        placeholder="public name (safe://something)"
+                        placeholder="website location"
                     /> )}
                 </FormItem>
                 <FormItem type="input" label="Image">
