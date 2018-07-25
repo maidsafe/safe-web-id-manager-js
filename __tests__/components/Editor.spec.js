@@ -12,11 +12,11 @@ describe( 'Editor', () =>
     beforeEach( () =>
     {
         props = {
-            match : { url: '/editor/josh' },
+            match : { url: '/editor/lala.lalala' },
             updateWebId : jest.fn(),
             webIds : [{
                 nick: 'josh',
-                uri: 'safe://lalala'
+                uri: 'lala.lalala'
             }]
         };
 
@@ -45,14 +45,14 @@ describe( 'Editor', () =>
             expect( wrapper.find( 'IdForm' ).length ).toBe( 0 );
         } );
 
-        it( 'should have idForm if name given', () =>
+        it( 'should have idForm if id given', () =>
         {
             const testProps = { ...props };
-            testProps.match.params = { nickname: 'josh' }
+            testProps.match.params = { id: 'lala.lalala' }
 
             wrapper = mount(
                  // <MemoryRouter initialEntries={ ['/','editor','josh']} initialIndex={0}   >
-                    <Editor  {...props} />
+                    <Editor  {...testProps} />
                  // </MemoryRouter>
                          );
 

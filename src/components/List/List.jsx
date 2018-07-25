@@ -55,27 +55,16 @@ class IdList extends React.Component
         {
             history.push( PATHS.CREATE )
         }
-        //
-        // if ( !isLoading && webIds.length === 0 )
-        // {
-        //     return ( <Button
-        //         onClick={ createNewWebId }
-        //         htmlType="submit"
-        //         type="primary"
-        //     >Create a WebId
-        //     </Button> );
-        // }
 
         const IdList = webIds.map( ( webId, i ) =>
         {
             const nickname = webId.nick;
-            const uri = webId.uri;
-            const image = webId.image;
+            const { uri, image } = webId;
             const safeUri = `safe://${uri}`;
             return (
                 <List.Item
                     key={ i }
-                    actions={ [<Link to={ `${PATHS.EDIT}/${nickname}` }>edit</Link>] }
+                    actions={ [<Link to={ `${PATHS.EDIT}/${uri}` }>edit</Link>] }
                 >
                     <List.Item.Meta
                         avatar={ image ?

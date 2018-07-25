@@ -100,13 +100,13 @@ describe( 'App', () =>
     } );
 
 
-    describe( '/edit/:name', () =>
+    describe( '/edit/:id', () =>
     {
 
-        it( 'should have idForm if name given', () =>
+        it( 'should have idForm if id given', () =>
         {
             props = { ...props };
-            props.store=  configureStore( { webIds : [ { nick: 'name' }]} )
+            props.store=  configureStore( { webIds : [ { uri: 'name' }]} )
 
             wrapper = mount( <MemoryRouter initialEntries={ ['/edit/name'] } >
                 <App { ...props } />

@@ -24,9 +24,9 @@ export default class Editor extends React.Component
     {
         const { match, idApp, updateWebId, webIds, history } = this.props;
         const params = match.params || {}; //or for testing.
-        const nickToMatch = params.nickname || '';
+        const idToMatch = params.id || '';
 
-        const webId = webIds.find( id => id.nick === nickToMatch );
+        const webId = webIds.find( id => id.uri === idToMatch );
         if( !webId ) return <div>No matching WebId found</div>;
 
         return (

@@ -70,7 +70,7 @@ class App extends React.Component
                                             <List history={ history } webIds={ webIds } getAvailableWebIds={ getAvailableWebIds } idApp={ safe.idApp } /> }
                                     />
                                     <Route
-                                        path="/edit/:nickname"
+                                        path="/edit/:id"
                                         render={
                                             ( props ) => ( <Editor
                                                 webIds={ webIds }

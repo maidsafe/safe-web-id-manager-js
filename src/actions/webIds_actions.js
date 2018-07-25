@@ -20,7 +20,13 @@ const sanitizeWebId = ( webId ) =>
     {
         if ( webId[key] && typeof webId[key] !== 'undefined' )
         {
-            newWebId[key] = webId[key].trim();
+            console.log('keyyyyy', key, webId[key])
+
+            newWebId[key] = webId[key];
+            if( typeof newWebId[key] === 'string' )
+            {
+                newWebId[key] = webId[key].trim();
+            }
 
             if ( key === 'uri' || key === 'website' )
             {

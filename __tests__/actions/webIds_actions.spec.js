@@ -38,8 +38,8 @@ describe( 'webIds actions', () =>
         const payload = {
             idApp : {},
             webId: {
-                name : 'testerton update',
-                '@id'   : 6
+                name : 'testerton update    ',
+                '@id'   : '6'
             }
         };
 
@@ -53,7 +53,8 @@ describe( 'webIds actions', () =>
 
         expect( res.type ).toEqual( expectedAction.type );
         expect( resultPayload ).not.toHaveProperty( 'idApp' );
-        expect( resultPayload ).toEqual( payload.webId );
+        expect( resultPayload.name ).toEqual( payload.webId.name.trim() );
+        expect( resultPayload['@id'] ).toEqual( payload.webId['@id'] );
     } );
 
 
