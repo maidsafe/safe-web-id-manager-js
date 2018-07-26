@@ -82,6 +82,9 @@ class IdForm extends React.Component
         webId : defaultId
     }
 
+    isEditing = () => {
+        return !!this.props.webId.uri;
+    }
 
     componentWillReceiveProps = ( newProps ) =>
     {
@@ -177,18 +180,22 @@ class IdForm extends React.Component
                         placeholder="full name"
                     /> )}
                 </FormItem>
-                <FormItem label="Web ID URI (not editable)" >
+                <FormItem label="Web ID URI (not editable)">
                     {getFieldDecorator( 'uri', {
                         rules : [
                             { required: true, message: 'publicId location for this webId.' },
                             { validator: this.validateUniqueId, message: 'This must not be an existing WebId.' },
                             { pattern: uriRegex, message: 'This must be a valid safe:// url' }],
                     } )( <Input
-                        disabled={ !!this.props.webId.uri }
+                        disabled={ this.isEditing() }
                         addonBefore="safe://"
                         // prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
                         placeholder="public name"
                     /> )}
+                    {
+                        !this.isEditing() &&
+                        <div>Note: It's not currently possible to create a webId using a domain created in the WebHosting Manager.</div>
+                    }
                 </FormItem>
                 <FormItem label="Website" >
                     {getFieldDecorator( 'website', {
