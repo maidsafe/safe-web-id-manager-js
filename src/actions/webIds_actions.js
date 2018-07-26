@@ -1,5 +1,5 @@
 import { createActions } from 'redux-actions';
-// import {message} from 'antd';
+import { message } from 'antd';
 import { SAFE_CONSTANTS } from '../constants';
 
 export const TYPES = {
@@ -21,7 +21,7 @@ const sanitizeWebId = ( webId ) =>
         if ( webId[key] && typeof webId[key] !== 'undefined' )
         {
             newWebId[key] = webId[key];
-            if( typeof newWebId[key] === 'string' )
+            if ( typeof newWebId[key] === 'string' )
             {
                 newWebId[key] = webId[key].trim();
             }
@@ -64,9 +64,11 @@ export const {
         }
         catch ( e )
         {
-            console.log( 'Error in addWebId', e );
+            console.error( 'Error in addWebId', e );
+            message.error( 'Error creating webID on the network' );
             return;
         }
+        message.success( 'WebId created succesfully' );
 
         console.log( 'WebId created on the network.' );
         history.push( '/' ); // back to main page
@@ -98,11 +100,13 @@ export const {
         }
         catch ( e )
         {
-            console.log( 'Error in updateWebId', e );
+            console.error( 'Error in updateWebId', e );
+            message.error( 'Error updating webID on the network' );
             return e;
         }
 
         console.log( 'WebId updated on the network.', history );
+        message.success( 'WebId updated successfully' );
 
         // why is this undefined? poush to newnickname....
         history.push( '/' ); // back to main page
@@ -124,7 +128,7 @@ export const {
             // remove what is appended later
             me.uri = webId['@id'].replace( 'safe://', '' );
 
-            if( me.website )
+            if ( me.website )
             {
                 me.website = me.website.replace( 'safe://', '' );
             }

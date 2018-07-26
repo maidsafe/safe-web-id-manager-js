@@ -1,5 +1,6 @@
 import { createActions } from 'redux-actions';
 import { APP_INFO } from '../constants';
+import {message} from 'antd';
 
 export const TYPES = {
     SAFE_AUTHORISE : 'SAFE_AUTHORISE'
@@ -31,10 +32,10 @@ export const {
         }
         catch ( e )
         {
+            message.error('Error authenticating on the network.')
             console.log( 'Error in auth attempt', e );
         }
 
-
-        console.log( 'attempting connect...' );
+        message.success('Authenticated successfully.')
     }
 } );
