@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as webIdsActions from '../actions/webIds_actions';
 import * as safeActions from '../actions/safe_actions';
 
-import styles from './global.css';
+import styles from './global.less';
 import Header from '../components/Header/Header';
 import Editor from '../components/Editor/Editor';
 import List from '../components/List/List';

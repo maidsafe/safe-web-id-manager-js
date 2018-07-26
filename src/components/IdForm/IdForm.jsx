@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Icon } from 'antd';
 import Avatar from '../Avatar/Avatar';
 
 const FormItem = Form.Item;
@@ -166,8 +166,7 @@ class IdForm extends React.Component
                     {getFieldDecorator( 'nick', {
                         rules : [{ required: true, whitespace: true, message: 'Please input a nickname, this will be used to entify this WebId!' }],
                     } )( <Input
-                        // and icons removed as attempts to access a font online
-                        // prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
+                        prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
                         placeholder="nickname"
                     /> )}
                 </FormItem>
@@ -175,8 +174,7 @@ class IdForm extends React.Component
                     {getFieldDecorator( 'name', {
                         rules : [{ required: true, whitespace: true, message: 'Please input a webId name.' }],
                     } )( <Input
-                        // and icons removed as attempts to access a font online
-                        // prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
+                        prefix={ <Icon type="user" style={ { color: 'rgba(0,0,0,.25)' } } /> }
                         placeholder="full name"
                     /> )}
                 </FormItem>
@@ -189,7 +187,7 @@ class IdForm extends React.Component
                     } )( <Input
                         disabled={ this.isEditing() }
                         addonBefore="safe://"
-                        // prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
+                        prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
                         placeholder="public name"
                     /> )}
                     {
@@ -202,7 +200,7 @@ class IdForm extends React.Component
                         rules : [{ pattern: uriRegex, message: 'This must be a valid safe:// url' }],
                     } )( <Input
                         addonBefore="safe://"
-                        // prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
+                        prefix={ <Icon type="link" style={ { color: 'rgba(0,0,0,.25)' } } /> }
                         placeholder="website location"
                     /> )}
                 </FormItem>
