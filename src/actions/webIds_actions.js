@@ -64,9 +64,15 @@ export const {
         }
         catch ( e )
         {
+            if( e && e.message === 'No ID has been found in the RDF graph.' )
+            {
+                message.error( 'This publicName already exists (created by another app). You can\'t make a webId here, sorry! ' );
+                return {};
+            }
+
             console.error( 'Error in addWebId', e );
-            message.error( 'Error creating webID on the network' );
-            return;
+            message.error( 'Error creating webId on the network' );
+            return {};
         }
         message.success( 'WebId created succesfully' );
 

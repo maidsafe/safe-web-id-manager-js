@@ -10,6 +10,9 @@ export default ( state = initialState, action ) =>
     {
         case TYPES.ADD_WEB_ID:
         {
+            if( ! payload.nick )
+                return state;
+
             return [...state, payload];
         }
         case TYPES.UPDATE_WEB_ID:
