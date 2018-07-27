@@ -76,7 +76,7 @@ class IdForm extends React.Component
         webIds             : PropTypes.arrayOf( PropTypes.shape ).isRequired,
         submit             : PropTypes.func.isRequired,
         getAvailableWebIds : PropTypes.func.isRequired,
-        idApp              : PropTypes.shape.isRequired
+        // idApp              : PropTypes.shape.isRequired
     }
     static defaultProps = {
         webId : defaultId

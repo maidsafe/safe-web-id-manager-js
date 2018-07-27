@@ -49,7 +49,12 @@ export const {
     {
         const { idApp, history, webId } = payload;
 
-        if ( !idApp ) throw new Error( 'No idApp provided to action' );
+        if ( !idApp )
+        {
+            message.error('Not authorised.')
+            console.log('Not authorise')
+            throw new Error( 'No idApp provided to action' );
+        }
 
         const newWebId = sanitizeWebId( webId );
 

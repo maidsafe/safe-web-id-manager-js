@@ -13,7 +13,7 @@ describe( 'webIds reducer', () =>
     {
         it( 'should handle adding a webId', () =>
         {
-            const payload = { name: 'testttyyy' };
+            const payload = { name: 'testttyyy', nick:'llalala' };
             expect( webIdsReducer( {}, {
                 type : TYPES.ADD_WEB_ID,
                 payload
@@ -22,8 +22,8 @@ describe( 'webIds reducer', () =>
 
         it( 'should handle adding multiple webIds', () =>
         {
-            const payload = { name: 'testttyyy' };
-            const payload2 = { name: 'two' };
+            const payload = { name: 'testttyyy' , nick:'llalala'  };
+            const payload2 = { name: 'two', nick:'llassslala'  };
 
             const state = webIdsReducer( [], {
                 type : TYPES.ADD_WEB_ID,
