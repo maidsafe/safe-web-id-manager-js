@@ -1,0 +1,6 @@
+//.lessrc
+{
+	"modifyVars": {
+	  "@icon-url" : "./iconfont/iconfont"
+	}
+}
