@@ -178,12 +178,12 @@ class IdForm extends React.Component
                         placeholder="full name"
                     /> )}
                 </FormItem>
-                <FormItem label="Web ID URI (not editable)">
+                <FormItem label="Web ID URI (not editable), eg: safe://subdomain.domain">
                     {getFieldDecorator( 'uri', {
                         rules : [
-                            { required: true, message: 'publicId location for this webId.' },
+                            { required: true, message: 'URI location for this webId should be provided.' },
                             { validator: this.validateUniqueId, message: 'This must not be an existing WebId.' },
-                            { pattern: uriRegex, message: 'This must be a valid safe:// url' }],
+                            { pattern: uriRegex, message: 'This must be a valid safe:// url, in for format: <subdomain>.<domain>' }],
                     } )( <Input
                         disabled={ this.isEditing() }
                         addonBefore="safe://"
