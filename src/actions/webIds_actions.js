@@ -51,8 +51,8 @@ export const {
 
         if ( !idApp )
         {
-            message.error('Not authorised.')
-            console.log('Not authorise')
+            message.error( 'Not authorised.' );
+            console.log( 'Not authorise' );
             throw new Error( 'No idApp provided to action' );
         }
 
@@ -69,7 +69,7 @@ export const {
         }
         catch ( e )
         {
-            if( e && e.message === 'No ID has been found in the RDF graph.' )
+            if ( e && e.message === 'No ID has been found in the RDF graph.' )
             {
                 message.error( 'This publicName already exists (created by another app). You can\'t make a webId here, sorry! ' );
                 return {};
@@ -83,7 +83,14 @@ export const {
 
         console.log( 'WebId created on the network.' );
         history.push( '/' ); // back to main page
-        return newWebId;
+
+        const webIdForApp = {
+            ...newWebId,
+            uri     : newWebId.uri.replace( 'safe://', '' ),
+            website : newWebId.website.replace( 'safe://', '' )
+        };
+
+        return webIdForApp;
     },
     [TYPES.UPDATE_WEB_ID] : async ( payload ) =>
     {
