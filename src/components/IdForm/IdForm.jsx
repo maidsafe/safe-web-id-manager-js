@@ -178,7 +178,7 @@ class IdForm extends React.Component
                         placeholder="full name"
                     /> )}
                 </FormItem>
-                <FormItem label="Web ID URI (not editable), eg: safe://subdomain.domain">
+                <FormItem label="Web ID URI (not editable), eg: safe://sub.domain">
                     {getFieldDecorator( 'uri', {
                         rules : [
                             { required: true, message: 'URI location for this webId should be provided.' },
