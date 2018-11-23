@@ -153,7 +153,15 @@ export const {
 
         if ( window.name ) return []; // jest short circuit
 
-        const webIds = await idApp.web.getWebIds( );
+        let webIds;
+        try {
+            webIds = await idApp.web.getWebIds();
+        } catch (err) {
+            if (err.code = 1021) {
+                message.error('The experimental APIs are disabled, please enable them from the SAFE Browser');
+            }
+            throw(err);
+        }
 
         const actualIds = await Promise.all(webIds.map( async webId =>
         {
