@@ -5,8 +5,7 @@ import { SAFE_CONSTANTS } from '../constants';
 export const TYPES = {
     ADD_WEB_ID            : 'ADD_WEB_ID',
     UPDATE_WEB_ID         : 'UPDATE_WEB_ID',
-    GET_AVAILABLE_WEB_IDS : 'GET_AVAILABLE_WEB_IDS',
-    GET_WEB_ID            : 'GET_WEB_ID'
+    GET_AVAILABLE_WEB_IDS : 'GET_AVAILABLE_WEB_IDS'
 };
 
 const TYPE_TAG = 16048;
@@ -41,7 +40,6 @@ const sanitizeWebId = ( webId ) =>
 export const {
     addWebId,
     updateWebId,
-    // getWebId,
     getAvailableWebIds
 } = createActions( {
 
@@ -62,6 +60,15 @@ export const {
 
         try
         {
+            if (newWebId.image && newWebId.imageMimeType) {
+              // let's store the image first
+              const imdWriter = await idApp.immutableData.create();
+              await imdWriter.write(newWebId.image);
+              const cipherOpt = await idApp.cipherOpt.newPlainText();
+              const { xorUrl } = await imdWriter.close(cipherOpt, true, newWebId.imageMimeType);
+              newWebId.image = xorUrl;
+            }
+
             const md = await idApp.mutableData.newRandomPublic( TYPE_TAG );
             await md.quickSetup( {} );
             const webIdRDF = await md.emulateAs( 'WebID' );
@@ -87,7 +94,7 @@ export const {
         const webIdForApp = {
             ...newWebId,
             uri     : newWebId.uri.replace( 'safe://', '' ),
-            website : newWebId.website.replace( 'safe://', '' )
+            website : newWebId.website ? newWebId.website.replace( 'safe://', '' ) : ''
         };
 
         return webIdForApp;
@@ -104,17 +111,26 @@ export const {
 
         try
         {
+            if (newWebId.image && newWebId.imageMimeType) {
+              // let's store the image first
+              const imdWriter = await idApp.immutableData.create();
+              await imdWriter.write(newWebId.image);
+              const cipherOpt = await idApp.cipherOpt.newPlainText();
+              const { xorUrl } = await imdWriter.close(cipherOpt, true, newWebId.imageMimeType);
+              newWebId.image = xorUrl;
+            }
+
             const mdUri = newWebId.uri;
 
-            const { serviceMd, type, path } = await idApp.fetch( mdUri );
+            const { content, resourceType } = await idApp.fetch( mdUri );
 
             let pulledWebId;
-            if ( type === 'RDF' )
+            if ( resourceType === 'RDF' )
             {
-                pulledWebId = await serviceMd.emulateAs( 'WebID' );
+                pulledWebId = await content.emulateAs( 'WebID' );
                 await pulledWebId.fetchContent();
+                await pulledWebId.update( newWebId );
             }
-            await pulledWebId.update( newWebId );
         }
         catch ( e )
         {
@@ -139,20 +155,30 @@ export const {
 
         const webIds = await idApp.web.getWebIds( );
 
-        const actualIds = webIds.map( webId =>
+        const actualIds = await Promise.all(webIds.map( async webId =>
         {
             const me = webId['#me'];
 
             // remove what is appended later
             me.uri = webId['@id'].replace( 'safe://', '' );
-
             if ( me.website )
             {
-                me.website = me.website.replace( 'safe://', '' );
+                const website = me.website['@id'] ? me.website['@id'] : me.website;
+                me.website = website.replace('safe://', '');
+            }
+
+            if ( me.image && me.image['@id'] )
+            {
+                me.image = me.image['@id'];
+            }
+
+            if ( me.inbox && me.inbox['@id'] )
+            {
+                me.inbox = me.inbox['@id'];
             }
 
             return me;
-        } );
+        } ));
         return actualIds;
     }
 } );
