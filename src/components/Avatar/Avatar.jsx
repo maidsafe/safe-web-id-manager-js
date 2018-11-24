@@ -8,6 +8,13 @@ function getBase64( img, callback )
     reader.readAsDataURL( img );
 }
 
+function getBinary( img, callback )
+{
+    const reader = new FileReader();
+    reader.addEventListener( 'load', () => callback( reader.result ) );
+    reader.readAsArrayBuffer( img );
+}
+
 function beforeUpload( file )
 {
     const isJPG = file.type === 'image/jpeg';
@@ -50,10 +57,12 @@ class Avatar extends React.Component
 
       getBase64( info.file.originFileObj, imageUrl =>
       {
-          this.setState( {
-              imageUrl
-              // loading : false,
-          } );
+          this.setState( { imageUrl } );
+      } );
+
+      getBinary( info.file.originFileObj, imageBinary =>
+      {
+          this.setState( { imageBinary, imageMimeType: info.file.type } );
       } );
   }
   render()
@@ -78,7 +87,6 @@ class Avatar extends React.Component
               className="avatar-uploader"
               showUploadList={ false }
               ref={(c)=> {this.uploader = c}}
-              // action="http://localhost:3984/dummy/upload"
               beforeUpload={ beforeUpload }
               onChange={ this.handleChange }
           >

@@ -70,7 +70,6 @@ class IdForm extends React.Component
             name    : PropTypes.string,
             website : PropTypes.string,
             uri     : PropTypes.string,
-            image   : PropTypes.string,
             pk      : PropTypes.string
         } ),
         webIds             : PropTypes.arrayOf( PropTypes.shape ).isRequired,
@@ -117,26 +116,23 @@ class IdForm extends React.Component
             match, submit, idApp, history, webId
         } = this.props;
 
-        const imgBase64 = this.theAvatar.state.imageUrl;
+        const imageBinary = this.theAvatar.state.imageBinary;
+        const imageMimeType = this.theAvatar.state.imageMimeType;
 
         this.props.form.validateFields( ( err, values ) =>
         {
             if ( !err )
             {
-                let image = imgBase64;
-
-                if ( !image && webId )
-                {
+                let image = imageBinary;
+                if (!image && webId) {
                     image = webId.image;
                 }
 
-                const webIdWithImageAndUpdates = { ...webId, ...values, image };
+                const webIdWithImageAndUpdates = { ...webId, ...values, image, imageMimeType };
                 console.log( 'ON CLICK:: Updating with', webIdWithImageAndUpdates, history );
 
                 // history to move us on a page when successful
                 submit( { idApp, webId: webIdWithImageAndUpdates, history } );
-
-                // this.setState({created: true })
             }
         } );
     }

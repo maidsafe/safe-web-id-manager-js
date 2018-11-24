@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -36,10 +35,8 @@ class App extends React.Component
         const {
             webIds
             , history
-            // , match
             , addWebId
             , getAvailableWebIds
-            , getWebId
             , updateWebId
             , safe
         } = this.props;
@@ -77,7 +74,6 @@ class App extends React.Component
                                                 idApp={ safe.idApp }
                                                 { ...props }
                                                 updateWebId={ updateWebId }
-                                                getWebId={ getWebId }
                                             /> )
                                         }
                                     />

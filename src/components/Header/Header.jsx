@@ -16,7 +16,7 @@ const Header = ( props ) =>
 
     return (
         <div>
-            <h1>WebId Profile Manager</h1>
+            <h1>WebID Profile Manager</h1>
             <Menu mode="horizontal" selectedKeys={ selectedKeys }>
                 <Menu.Item key={ PATHS.LIST }>
                     <NavLink to={ PATHS.LIST } >List</NavLink>
