@@ -4,6 +4,7 @@ import { HashRouter } from 'react-router-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise';
+import "@babel/polyfill";
 
 import App from './containers/App';
 import rootReducer from './reducers';
